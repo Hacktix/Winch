@@ -9,6 +9,8 @@ namespace Winch.Core
     {
         public static void Initialize()
         {
+            WinchCore.Log.Debug("Initializer started.");
+
             InitializeVersionLabel();
 
             if(WinchConfig.GetProperty("EnableDeveloperConsole", false))
@@ -17,12 +19,14 @@ namespace Winch.Core
 
         private static void InitializeVersionLabel()
         {
+            WinchCore.Log.Debug("Initializing Version Label...");
             string versionString = VersionUtil.GetVersion();
             GameManager.Instance.BuildInfo.BuildNumber += $"\nWinch {versionString}";
         }
 
         private static void InitializeDevConsole()
         {
+            WinchCore.Log.Debug("Initializing Developer Console...");
             GameObject term = new GameObject();
             term.AddComponent<Terminal>();
             UnityEngine.Object.DontDestroyOnLoad(term);

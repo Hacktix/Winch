@@ -4,7 +4,7 @@ using Winch.Util;
 
 namespace Winch.Core
 {
-    public class Winch
+    public class WinchCore
     {
         public static Logger Log = new Logger();
 
@@ -14,7 +14,9 @@ namespace Winch.Core
             Log.Info($"Winch {version} booting up...");
 
             var harmony = new Harmony("com.dredge.winch");
+            Log.Debug("Created Harmony Instance 'com.dredge.winch'. Patching...");
             harmony.PatchAll();
+            Log.Debug("Harmony Patching complete.");
         }
     }
 }
