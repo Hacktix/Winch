@@ -65,7 +65,7 @@ namespace Winch.Config
 
         private void SaveSettings()
         {
-            string confText = JsonConvert.SerializeObject(_config);
+            string confText = JsonConvert.SerializeObject(_config, Formatting.Indented);
             File.WriteAllText(_configPath, confText);
         }
     }
