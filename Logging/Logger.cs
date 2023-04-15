@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using Winch.Config;
 
 namespace Winch.Logging
@@ -48,7 +50,22 @@ namespace Winch.Logging
 
         private string GetSourceTag()
         {
-            return $"{Assembly.GetCallingAssembly().GetName().Name}";
+            StackFrame[] frames = new StackTrace().GetFrames();
+            string callingClass = "";
+            string callingMethod = "";
+            for(int i = 1; i < frames.Length; i++)
+            {
+                callingMethod = frames[i].GetMethod().Name;
+                callingClass = frames[i].GetMethod().ReflectedType.Name;
+                if(!callingClass.Equals("Logger"))
+                    break;
+            }
+
+            string sourceTag = $"{Assembly.GetCallingAssembly().GetName().Name}";
+            if (WinchConfig.GetProperty("DetailedLogSources", false))
+                sourceTag += $".{callingClass}.{callingMethod}";
+
+            return sourceTag;
         }
 
 

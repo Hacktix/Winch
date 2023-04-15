@@ -2,5 +2,6 @@
 	"WriteLogsToFile": true,
 	"LogLevel": "DEBUG",
 	"LogsFolder": "Logs",
+	"DetailedLogSources": false,
 	"EnableDeveloperConsole": true
 }
