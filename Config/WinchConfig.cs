@@ -42,7 +42,7 @@ namespace Winch.Config
 
         public static T GetProperty<T>(string key, T defaultValue)
         {
-            return _instance._getProperty<T>(key, defaultValue);
+            return Instance._getProperty<T>(key, defaultValue);
         }
 
 
