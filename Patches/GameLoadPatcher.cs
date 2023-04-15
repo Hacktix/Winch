@@ -1,4 +1,5 @@
 ﻿using HarmonyLib;
+using Winch.Core;
 
 namespace Winch.Patches
 {
@@ -8,7 +9,7 @@ namespace Winch.Patches
     {
         static void Postfix()
         {
-            GameManager.Instance.BuildInfo.BuildNumber += "\nWinch Loaded!";
+            Initializer.Initialize();
         }
     }
 }
