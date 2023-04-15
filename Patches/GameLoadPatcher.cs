@@ -1,11 +1,10 @@
 ﻿using HarmonyLib;
-using System.IO;
 
 namespace Winch.Patches
 {
     [HarmonyPatch(typeof(GameManager))]
     [HarmonyPatch("WaitForAllAsyncManagers")]
-    class GameLoadHook
+    class GameLoadPatcher
     {
         static void Postfix()
         {

@@ -2,7 +2,7 @@
 using System;
 using System.Reflection;
 
-namespace Winch
+namespace Winch.Core
 {
     public class Loader
     {

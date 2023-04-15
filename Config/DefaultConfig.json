@@ -1,0 +1,6 @@
+﻿{
+	"WriteLogsToFile": true,
+	"LogLevel": "DEBUG",
+	"LogsFolder": "Logs",
+	"EnableDeveloperConsole": true
+}
