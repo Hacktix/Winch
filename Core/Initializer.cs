@@ -1,7 +1,7 @@
 ﻿using CommandTerminal;
-using System.Reflection;
 using UnityEngine;
 using Winch.Config;
+using Winch.Util;
 
 namespace Winch.Core
 {
@@ -17,7 +17,8 @@ namespace Winch.Core
 
         private static void InitializeVersionLabel()
         {
-            GameManager.Instance.BuildInfo.BuildNumber += "\nWinch alpha-0.0.1";
+            string versionString = VersionUtil.GetVersion();
+            GameManager.Instance.BuildInfo.BuildNumber += $"\nWinch {versionString}";
         }
 
         private static void InitializeDevConsole()

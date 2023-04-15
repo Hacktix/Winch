@@ -9,6 +9,8 @@
 	<PropertyGroup>
 		<DebugType>none</DebugType>
 		<OutputPath>./bin</OutputPath>
+		<AssemblyVersion>0.1.*</AssemblyVersion>
+		<Deterministic>False</Deterministic>
 	</PropertyGroup>
 
 	<ItemGroup>
