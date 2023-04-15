@@ -35,7 +35,7 @@ namespace Winch.Logging
             if (level < _minLogLevel)
                 return;
 
-            string logMessage = $"[{GetLogTimestamp()}] [{level}] [{GetSourceTag()}] : {message}";
+            string logMessage = $"[{GetLogTimestamp()}] [{level,-5}] [{GetSourceTag()}] : {message}";
             _log.Write(logMessage);
             _latestLog.Write(logMessage);
         }
