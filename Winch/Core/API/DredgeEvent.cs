@@ -100,6 +100,20 @@ namespace Winch.Core.API
             else
                 QuestGridLoaded?.Invoke(sender, args);
         }
+
+
+
+        public static event AddressablesLoadedEventHandler<UpgradeData> BeforeUpgradesLoaded;
+        public static event AddressablesLoadedEventHandler<UpgradeData> UpgradesLoaded;
+        internal static void TriggerUpgradesLoaded(object sender, AsyncOperationHandle<IList<UpgradeData>> loadHandle, bool prefixTrigger)
+        {
+            WinchCore.Log.Debug($"Triggered UpgradesLoaded type event: {loadHandle.Result.Count} elements (Prefix: {prefixTrigger})");
+            AddressablesLoadedEventArgs<UpgradeData> args = new AddressablesLoadedEventArgs<UpgradeData>(loadHandle);
+            if (prefixTrigger)
+                BeforeUpgradesLoaded?.Invoke(sender, args);
+            else
+                UpgradesLoaded?.Invoke(sender, args);
+        }
     }
 
 }
