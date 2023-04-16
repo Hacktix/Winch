@@ -20,8 +20,13 @@ namespace Winch.Core
         private static void InitializeVersionLabel()
         {
             WinchCore.Log.Debug("Initializing Version Label...");
+
             string versionString = VersionUtil.GetVersion();
             GameManager.Instance.BuildInfo.BuildNumber += $"\nWinch {versionString}";
+
+            int modsLoaded = ModAssemblyLoader.LoadedAssemblies;
+            string modsLoadedString = $"{modsLoaded} Mod{(modsLoaded > 1 ? "s" : "")} loaded";
+            GameManager.Instance.BuildInfo.BuildNumber += $"\n{modsLoadedString}";
         }
 
         private static void InitializeDevConsole()
