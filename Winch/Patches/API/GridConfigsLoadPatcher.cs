@@ -9,12 +9,12 @@ namespace Winch.Patches.API
     [HarmonyPatch("OnGridConfigDataAddressablesLoaded")]
     class GridConfigsLoadPatcher
     {
-        public static void Prefix(ItemManager __instance, AsyncOperationHandle<IList<GridConfiguration>> handle)
+        public static void Prefix(DataLoader __instance, AsyncOperationHandle<IList<GridConfiguration>> handle)
         {
             DredgeEvent.TriggerGridConfigsLoaded(__instance, handle, true);
         }
 
-        public static void Postfix(ItemManager __instance, AsyncOperationHandle<IList<GridConfiguration>> handle)
+        public static void Postfix(DataLoader __instance, AsyncOperationHandle<IList<GridConfiguration>> handle)
         {
             DredgeEvent.TriggerGridConfigsLoaded(__instance, handle, false);
         }

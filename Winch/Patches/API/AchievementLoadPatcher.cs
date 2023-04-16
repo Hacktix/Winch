@@ -9,12 +9,12 @@ namespace Winch.Patches.API
     [HarmonyPatch("OnAchievementDataAddressablesLoaded")]
     class AchievementLoadPatcher
     {
-        public static void Prefix(ItemManager __instance, AsyncOperationHandle<IList<AchievementData>> handle)
+        public static void Prefix(AchievementManager __instance, AsyncOperationHandle<IList<AchievementData>> handle)
         {
             DredgeEvent.TriggerAchievementsLoaded(__instance, handle, true);
         }
 
-        public static void Postfix(ItemManager __instance, AsyncOperationHandle<IList<AchievementData>> handle)
+        public static void Postfix(AchievementManager __instance, AsyncOperationHandle<IList<AchievementData>> handle)
         {
             DredgeEvent.TriggerAchievementsLoaded(__instance, handle, false);
         }
