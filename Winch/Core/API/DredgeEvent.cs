@@ -17,22 +17,32 @@ namespace Winch.Core.API
         }
         public delegate void AddressablesLoadedEventHandler<T>(object sender, AddressablesLoadedEventArgs<T> e);
 
+
+
+        public static event AddressablesLoadedEventHandler<AchievementData> BeforeAchievementsLoaded;
+        public static event AddressablesLoadedEventHandler<AchievementData> AchievementsLoaded;
+        internal static void TriggerAchievementsLoaded(object sender, AsyncOperationHandle<IList<AchievementData>> loadHandle, bool prefixTrigger)
+        {
+            WinchCore.Log.Debug($"Triggered AchievementsLoaded type event: {loadHandle.Result.Count} elements (Prefix: {prefixTrigger})");
+            AddressablesLoadedEventArgs<AchievementData> args = new AddressablesLoadedEventArgs<AchievementData>(loadHandle);
+            if (prefixTrigger)
+                BeforeAchievementsLoaded?.Invoke(sender, args);
+            else
+                AchievementsLoaded?.Invoke(sender, args);
+        }
+
+
+
         public static event AddressablesLoadedEventHandler<ItemData> BeforeItemsLoaded;
         public static event AddressablesLoadedEventHandler<ItemData> ItemsLoaded;
         internal static void TriggerItemsLoaded(object sender, AsyncOperationHandle<IList<ItemData>> loadHandle, bool prefixTrigger)
         {
-            WinchCore.Log.Debug($"Triggered ItemsLoaded type event: {loadHandle.Result.Count} elements");
+            WinchCore.Log.Debug($"Triggered ItemsLoaded type event: {loadHandle.Result.Count} elements (Prefix: {prefixTrigger})");
             AddressablesLoadedEventArgs<ItemData> args = new AddressablesLoadedEventArgs<ItemData>(loadHandle);
-            if(prefixTrigger)
-            {
-                WinchCore.Log.Debug($"Invoking BeforeItemsLoaded Event...");
+            if (prefixTrigger)
                 BeforeItemsLoaded?.Invoke(sender, args);
-            }
             else
-            {
-                WinchCore.Log.Debug($"Invoking ItemsLoaded Event...");
                 ItemsLoaded?.Invoke(sender, args);
-            }
         }
     }
 
