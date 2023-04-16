@@ -33,6 +33,20 @@ namespace Winch.Core.API
 
 
 
+        public static event AddressablesLoadedEventHandler<GridConfiguration> BeforeGridConfigsLoaded;
+        public static event AddressablesLoadedEventHandler<GridConfiguration> GridConfigsLoaded;
+        internal static void TriggerGridConfigsLoaded(object sender, AsyncOperationHandle<IList<GridConfiguration>> loadHandle, bool prefixTrigger)
+        {
+            WinchCore.Log.Debug($"Triggered GridConfigsLoaded type event: {loadHandle.Result.Count} elements (Prefix: {prefixTrigger})");
+            AddressablesLoadedEventArgs<GridConfiguration> args = new AddressablesLoadedEventArgs<GridConfiguration>(loadHandle);
+            if (prefixTrigger)
+                BeforeGridConfigsLoaded?.Invoke(sender, args);
+            else
+                GridConfigsLoaded?.Invoke(sender, args);
+        }
+
+
+
         public static event AddressablesLoadedEventHandler<ItemData> BeforeItemsLoaded;
         public static event AddressablesLoadedEventHandler<ItemData> ItemsLoaded;
         internal static void TriggerItemsLoaded(object sender, AsyncOperationHandle<IList<ItemData>> loadHandle, bool prefixTrigger)
@@ -47,16 +61,16 @@ namespace Winch.Core.API
 
 
 
-        public static event AddressablesLoadedEventHandler<GridConfiguration> BeforeGridConfigsLoaded;
-        public static event AddressablesLoadedEventHandler<GridConfiguration> GridConfigsLoaded;
-        internal static void TriggerGridConfigsLoaded(object sender, AsyncOperationHandle<IList<GridConfiguration>> loadHandle, bool prefixTrigger)
+        public static event AddressablesLoadedEventHandler<MapMarkerData> BeforeMapMarkersLoaded;
+        public static event AddressablesLoadedEventHandler<MapMarkerData> MapMarkersLoaded;
+        internal static void TriggerMapMarkersLoaded(object sender, AsyncOperationHandle<IList<MapMarkerData>> loadHandle, bool prefixTrigger)
         {
-            WinchCore.Log.Debug($"Triggered GridConfigsLoaded type event: {loadHandle.Result.Count} elements (Prefix: {prefixTrigger})");
-            AddressablesLoadedEventArgs<GridConfiguration> args = new AddressablesLoadedEventArgs<GridConfiguration>(loadHandle);
+            WinchCore.Log.Debug($"Triggered MapMarkersLoaded type event: {loadHandle.Result.Count} elements (Prefix: {prefixTrigger})");
+            AddressablesLoadedEventArgs<MapMarkerData> args = new AddressablesLoadedEventArgs<MapMarkerData>(loadHandle);
             if (prefixTrigger)
-                BeforeGridConfigsLoaded?.Invoke(sender, args);
+                BeforeMapMarkersLoaded?.Invoke(sender, args);
             else
-                GridConfigsLoaded?.Invoke(sender, args);
+                MapMarkersLoaded?.Invoke(sender, args);
         }
     }
 
