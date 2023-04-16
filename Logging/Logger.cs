@@ -37,7 +37,7 @@ namespace Winch.Logging
             if (level < _minLogLevel)
                 return;
 
-            string logMessage = $"[{GetLogTimestamp()}] [{level,-5}] [{GetSourceTag()}] : {message}";
+            string logMessage = $"[{GetLogTimestamp()}] [{GetSourceTag()}] [{level}] : {message}";
             _log.Write(logMessage);
             _latestLog.Write(logMessage);
         }
@@ -53,15 +53,17 @@ namespace Winch.Logging
             StackFrame[] frames = new StackTrace().GetFrames();
             string callingClass = "";
             string callingMethod = "";
+            string callingAssembly = "";
             for(int i = 1; i < frames.Length; i++)
             {
                 callingMethod = frames[i].GetMethod().Name;
                 callingClass = frames[i].GetMethod().ReflectedType.Name;
+                callingAssembly = frames[i].GetMethod().ReflectedType.Assembly.GetName().Name;
                 if(!callingClass.Equals("Logger"))
                     break;
             }
 
-            string sourceTag = $"{Assembly.GetCallingAssembly().GetName().Name}";
+            string sourceTag = $"{callingAssembly}";
             if (WinchConfig.GetProperty("DetailedLogSources", false))
                 sourceTag += $".{callingClass}.{callingMethod}";
 
