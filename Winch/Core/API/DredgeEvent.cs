@@ -128,6 +128,20 @@ namespace Winch.Core.API
             else
                 WeatherDataLoaded?.Invoke(sender, args);
         }
+
+
+
+        public static event AddressablesLoadedEventHandler<WorldEventData> BeforeWorldEventsLoaded;
+        public static event AddressablesLoadedEventHandler<WorldEventData> WorldEventsLoaded;
+        internal static void TriggerWorldEventsLoaded(object sender, AsyncOperationHandle<IList<WorldEventData>> loadHandle, bool prefixTrigger)
+        {
+            WinchCore.Log.Debug($"Triggered WorldEventsLoaded type event: {loadHandle.Result.Count} elements (Prefix: {prefixTrigger})");
+            AddressablesLoadedEventArgs<WorldEventData> args = new AddressablesLoadedEventArgs<WorldEventData>(loadHandle);
+            if (prefixTrigger)
+                BeforeWorldEventsLoaded?.Invoke(sender, args);
+            else
+                WorldEventsLoaded?.Invoke(sender, args);
+        }
     }
 
 }
