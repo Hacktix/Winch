@@ -5,8 +5,8 @@
 ## Roadmap
 
 - [x] Code Execution when booting DREDGE
-- [ ] Basic Configuration Options for Winch
-- [ ] Loading separate Mod Assemblies at runtime
+- [x] Basic Configuration Options for Winch
+- [x] Loading separate Mod Assemblies at runtime
 - [ ] Standardized Mod Format (Metadata JSON File)
 - [ ] Provide API to Mod Assemblies to interface with the game
 - [ ] Documentation & Examples
