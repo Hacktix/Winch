@@ -26,6 +26,7 @@
 	<ItemGroup>
 		<Reference Include="UnityEngine.dll" HintPath="$(DredgePath)/DREDGE_Data/Managed/UnityEngine.dll" Private="False" />
 		<Reference Include="UnityEngine.CoreModule.dll" HintPath="$(DredgePath)/DREDGE_Data/Managed/UnityEngine.CoreModule.dll" Private="False" />
+		<Reference Include="Unity.ResourceManager.dll" HintPath="$(DredgePath)/DREDGE_Data/Managed/Unity.ResourceManager.dll" Private="False" />
 	</ItemGroup>
 
 	<ItemGroup>
