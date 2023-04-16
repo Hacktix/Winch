@@ -9,8 +9,9 @@ namespace Winch.Patches
     {
         static void Postfix()
         {
-            WinchCore.Log.Debug("'GameManager.WaitForAllAsyncManagers' Postfix called, running Initializer.");
+            WinchCore.Log.Info("Game Managers completed loading, initializing Winch...");
             Initializer.Initialize();
+            WinchCore.Log.Info("Winch initialized successfully.");
         }
     }
 }

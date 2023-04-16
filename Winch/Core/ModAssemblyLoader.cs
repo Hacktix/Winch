@@ -14,7 +14,7 @@ namespace Winch.Core
                 Directory.CreateDirectory("Mods");
 
             string[] modDirs = Directory.GetDirectories("Mods");
-            WinchCore.Log.Debug($"Loading {modDirs.Length} mod assemblies...");
+            WinchCore.Log.Info($"Loading {modDirs.Length} mod assemblies...");
             foreach (string modDir in modDirs)
             {
                 bool success = LoadModFromPath(modDir);
