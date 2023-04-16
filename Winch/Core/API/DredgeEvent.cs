@@ -86,6 +86,20 @@ namespace Winch.Core.API
             else
                 QuestsLoaded?.Invoke(sender, args);
         }
+
+
+
+        public static event AddressablesLoadedEventHandler<QuestGridConfig> BeforeQuestGridLoaded;
+        public static event AddressablesLoadedEventHandler<QuestGridConfig> QuestGridLoaded;
+        internal static void TriggerQuestGridLoaded(object sender, AsyncOperationHandle<IList<QuestGridConfig>> loadHandle, bool prefixTrigger)
+        {
+            WinchCore.Log.Debug($"Triggered QuestGridLoaded type event: {loadHandle.Result.Count} elements (Prefix: {prefixTrigger})");
+            AddressablesLoadedEventArgs<QuestGridConfig> args = new AddressablesLoadedEventArgs<QuestGridConfig>(loadHandle);
+            if (prefixTrigger)
+                BeforeQuestGridLoaded?.Invoke(sender, args);
+            else
+                QuestGridLoaded?.Invoke(sender, args);
+        }
     }
 
 }
