@@ -1,4 +1,5 @@
 ﻿using HarmonyLib;
+using Winch.Core;
 
 namespace IntroSkipper
 {
@@ -8,6 +9,7 @@ namespace IntroSkipper
     {
         public static bool Prefix()
         {
+            WinchCore.Log.Info("Skipping Splash Screen...");
             GameManager.Instance.Loader.LoadStartupFromSplash();
             return false;
         }
