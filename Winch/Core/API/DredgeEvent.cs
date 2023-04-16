@@ -44,6 +44,20 @@ namespace Winch.Core.API
             else
                 ItemsLoaded?.Invoke(sender, args);
         }
+
+
+
+        public static event AddressablesLoadedEventHandler<GridConfiguration> BeforeGridConfigsLoaded;
+        public static event AddressablesLoadedEventHandler<GridConfiguration> GridConfigsLoaded;
+        internal static void TriggerGridConfigsLoaded(object sender, AsyncOperationHandle<IList<GridConfiguration>> loadHandle, bool prefixTrigger)
+        {
+            WinchCore.Log.Debug($"Triggered GridConfigsLoaded type event: {loadHandle.Result.Count} elements (Prefix: {prefixTrigger})");
+            AddressablesLoadedEventArgs<GridConfiguration> args = new AddressablesLoadedEventArgs<GridConfiguration>(loadHandle);
+            if (prefixTrigger)
+                BeforeGridConfigsLoaded?.Invoke(sender, args);
+            else
+                GridConfigsLoaded?.Invoke(sender, args);
+        }
     }
 
 }
