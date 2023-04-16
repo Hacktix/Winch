@@ -13,6 +13,8 @@ namespace Winch.Core
             string version = VersionUtil.GetVersion();
             Log.Info($"Winch {version} booting up...");
 
+            ModAssemblyLoader.LoadModAssemblies();
+
             var harmony = new Harmony("com.dredge.winch");
             Log.Debug("Created Harmony Instance 'com.dredge.winch'. Patching...");
             harmony.PatchAll();
