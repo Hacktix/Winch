@@ -72,6 +72,20 @@ namespace Winch.Core.API
             else
                 MapMarkersLoaded?.Invoke(sender, args);
         }
+
+
+
+        public static event AddressablesLoadedEventHandler<QuestData> BeforeQuestsLoaded;
+        public static event AddressablesLoadedEventHandler<QuestData> QuestsLoaded;
+        internal static void TriggerQuestsLoaded(object sender, AsyncOperationHandle<IList<QuestData>> loadHandle, bool prefixTrigger)
+        {
+            WinchCore.Log.Debug($"Triggered QuestsLoaded type event: {loadHandle.Result.Count} elements (Prefix: {prefixTrigger})");
+            AddressablesLoadedEventArgs<QuestData> args = new AddressablesLoadedEventArgs<QuestData>(loadHandle);
+            if (prefixTrigger)
+                BeforeQuestsLoaded?.Invoke(sender, args);
+            else
+                QuestsLoaded?.Invoke(sender, args);
+        }
     }
 
 }
