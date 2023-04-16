@@ -1,0 +1,4 @@
+{
+    "ModAssembly": "IntroSkipper.dll",
+    "Entrypoint": "IntroSkipper.Loader/Initialize"
+}
