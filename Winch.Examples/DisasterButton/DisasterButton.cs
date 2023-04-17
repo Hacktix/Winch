@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Winch.Config;
 using Winch.Core;
 
 namespace DisasterButton
@@ -6,10 +7,11 @@ namespace DisasterButton
     class DisasterButton : MonoBehaviour
     {
         private static System.Random rnd = new System.Random();
+        private static string DisasterKey = ModConfig.GetProperty("DisasterButton", "DisasterButton", "delete");
 
         private void Update()
         {
-            if(Input.GetKeyDown(KeyCode.Delete))
+            if(Input.GetKeyDown(DisasterKey))
                 OnPress();
         }
 

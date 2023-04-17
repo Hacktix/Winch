@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using Winch.Config;
+using Winch.Core;
 using Winch.Core.API;
 
 namespace DisasterButton

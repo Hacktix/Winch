@@ -1,4 +1,7 @@
 {
   "ModAssembly": "DisasterButton.dll",
-  "Entrypoint": "DisasterButton.Loader/Initialize"
+  "Entrypoint": "DisasterButton.Loader/Initialize",
+  "DefaultConfig": {
+    "DisasterButton": "delete"
+  }
 }
