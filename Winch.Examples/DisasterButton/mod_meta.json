@@ -1,0 +1,4 @@
+{
+  "ModAssembly": "DisasterButton.dll",
+  "Entrypoint": "DisasterButton.Loader/Initialize"
+}

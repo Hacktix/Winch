@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Winch", "Winch\Winch.csproj
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntroSkipper", "Winch.Examples\IntroSkipper\IntroSkipper.csproj", "{561D1EF2-5AC2-4E97-B5C6-F645DC19A837}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DisasterButton", "Winch.Examples\DisasterButton\DisasterButton.csproj", "{B2CFB1AF-4532-4CDB-8133-F33AF7350DC4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{561D1EF2-5AC2-4E97-B5C6-F645DC19A837}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{561D1EF2-5AC2-4E97-B5C6-F645DC19A837}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{561D1EF2-5AC2-4E97-B5C6-F645DC19A837}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2CFB1AF-4532-4CDB-8133-F33AF7350DC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2CFB1AF-4532-4CDB-8133-F33AF7350DC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2CFB1AF-4532-4CDB-8133-F33AF7350DC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2CFB1AF-4532-4CDB-8133-F33AF7350DC4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
