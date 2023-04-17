@@ -1,6 +1,7 @@
 ﻿using CommandTerminal;
 using UnityEngine;
 using Winch.Config;
+using Winch.Core.API;
 using Winch.Util;
 
 namespace Winch.Core
@@ -15,6 +16,8 @@ namespace Winch.Core
 
             if(WinchConfig.GetProperty("EnableDeveloperConsole", false))
                 InitializeDevConsole();
+
+            DredgeEvent.TriggerManagersLoaded();
         }
 
         private static void InitializeVersionLabel()

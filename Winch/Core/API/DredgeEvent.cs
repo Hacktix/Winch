@@ -19,6 +19,15 @@ namespace Winch.Core.API
 
 
 
+        public static event EventHandler ManagersLoaded;
+        internal static void TriggerManagersLoaded()
+        {
+            WinchCore.Log.Debug("Triggered ManagersLoaded event");
+            ManagersLoaded?.Invoke(null, null);
+        }
+
+
+
         public static event AddressablesLoadedEventHandler<AchievementData> BeforeAchievementsLoaded;
         public static event AddressablesLoadedEventHandler<AchievementData> AchievementsLoaded;
         internal static void TriggerAchievementsLoaded(object sender, AsyncOperationHandle<IList<AchievementData>> loadHandle, bool prefixTrigger)
