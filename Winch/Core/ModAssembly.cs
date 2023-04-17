@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using Winch.Config;
 
 namespace Winch.Core
 {
@@ -49,6 +50,13 @@ namespace Winch.Core
         {
             if (LoadedAssembly == null)
                 throw new NullReferenceException("Cannot execute assembly as LoadedAssembly is null");
+
+            if(Metadata.ContainsKey("DefaultConfig"))
+            {
+                string defaultConfig = JsonConvert.SerializeObject(Metadata["DefaultConfig"], Formatting.Indented);
+                string modName = Path.GetFileName(BasePath);
+                ModConfig.RegisterDefaultConfig(modName, defaultConfig);
+            }
 
             if(Metadata.ContainsKey("Entrypoint"))
             {
