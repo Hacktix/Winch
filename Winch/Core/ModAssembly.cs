@@ -25,14 +25,14 @@ namespace Winch.Core
             Metadata = JsonConvert.DeserializeObject<Dictionary<string, object>>(metaText);
         }
 
-        public static ModAssembly FromPath(string path)
+        internal static ModAssembly FromPath(string path)
         {
             return new ModAssembly(path);
         }
 
 
 
-        public void LoadAssembly()
+        internal void LoadAssembly()
         {
             if (!Metadata.ContainsKey("ModAssembly"))
                 throw new MissingFieldException("Property 'ModAssembly' not found in mod_meta.json");
@@ -47,7 +47,7 @@ namespace Winch.Core
             WinchCore.Log.Debug($"Loaded Assembly '{LoadedAssembly.GetName().Name}'.");
         }
 
-        public void ExecuteAssembly()
+        internal void ExecuteAssembly()
         {
             if (LoadedAssembly == null)
                 throw new NullReferenceException("Cannot execute assembly as LoadedAssembly is null");

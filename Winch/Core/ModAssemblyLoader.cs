@@ -10,7 +10,7 @@ namespace Winch.Core
         public static List<string> LoadedMods = new List<string>();
         public static List<string> ErrorMods = new List<string>();
 
-        public static void LoadModAssemblies()
+        internal static void LoadModAssemblies()
         {
 
             if (!Directory.Exists("Mods"))

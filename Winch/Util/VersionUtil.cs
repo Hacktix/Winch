@@ -2,11 +2,11 @@
 
 namespace Winch.Util
 {
-    class VersionUtil
+    internal class VersionUtil
     {
         private static readonly string Prefix = "alpha";
 
-        public static string GetVersion()
+        internal static string GetVersion()
         {
             string versionString = Assembly.GetExecutingAssembly().GetName().Version.ToString();
             string[] parts = versionString.Split('.');
