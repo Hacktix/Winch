@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -51,14 +52,29 @@ namespace Winch.Core
             if (LoadedAssembly == null)
                 throw new NullReferenceException("Cannot execute assembly as LoadedAssembly is null");
 
-            if(Metadata.ContainsKey("DefaultConfig"))
+            WinchCore.Log.Debug($"Initializing ModAssembly {LoadedAssembly.GetName().Name}...");
+
+            if (Metadata.ContainsKey("DefaultConfig"))
                 ProcessDefaultConfig();
+
+            if (Metadata.ContainsKey("Dependencies"))
+                ProcessDependencies();
 
             if (Metadata.ContainsKey("Entrypoint"))
                 ProcessEntrypoint();
         }
 
 
+
+        private void ProcessDependencies()
+        {
+            string[] deps = ((JArray)Metadata["Dependencies"]).ToObject<string[]>();
+            foreach (string dep in deps)
+            {
+                WinchCore.Log.Debug($"Processing dependency {dep}");
+                ModAssemblyLoader.ExecuteModAssembly(dep);
+            }
+        }
 
         private void ProcessDefaultConfig()
         {

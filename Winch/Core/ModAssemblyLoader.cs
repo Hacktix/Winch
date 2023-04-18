@@ -43,7 +43,7 @@ namespace Winch.Core
 
         private static void ExecuteModAssemblies()
         {
-            foreach(string modName in RegisteredAssemblies.Keys)
+            foreach (string modName in RegisteredAssemblies.Keys)
                 ExecuteModAssembly(modName);
         }
 
@@ -51,6 +51,13 @@ namespace Winch.Core
         {
             if (LoadedMods.Contains(modName) || ErrorMods.Contains(modName))
                 return;
+
+            if (!RegisteredAssemblies.ContainsKey(modName))
+            {
+                ErrorMods.Add(modName);
+                WinchCore.Log.Error($"Mod not loaded: {modName}");
+                return;
+            }
 
             try
             {
