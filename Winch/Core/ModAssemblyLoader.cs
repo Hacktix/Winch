@@ -1,11 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace Winch.Core
 {
     class ModAssemblyLoader
     {
-        public static int LoadedAssemblies = 0;
+        public static Dictionary<string, ModAssembly> RegisteredAssemblies = new Dictionary<string, ModAssembly>();
+        public static List<string> LoadedMods = new List<string>();
+        public static List<string> ErrorMods = new List<string>();
 
         public static void LoadModAssemblies()
         {
@@ -16,33 +19,51 @@ namespace Winch.Core
             string[] modDirs = Directory.GetDirectories("Mods");
             WinchCore.Log.Info($"Loading {modDirs.Length} mod assemblies...");
             foreach (string modDir in modDirs)
-            {
-                bool success = LoadModFromPath(modDir);
-                if (success)
-                {
-                    LoadedAssemblies++;
-                }
-            }
+                RegisterModAssembly(modDir);
+            ExecuteModAssemblies();
         }
 
-        private static bool LoadModFromPath(string path)
+        private static void RegisterModAssembly(string path)
         {
             string modName = Path.GetFileName(path);
-            WinchCore.Log.Info($"Loading '{modName}'...");
+            WinchCore.Log.Debug($"Loading '{modName}'...");
             try
             {
                 ModAssembly mod = ModAssembly.FromPath(path);
                 mod.LoadAssembly();
-                mod.ExecuteAssembly();
+                RegisteredAssemblies.Add(modName, mod);
             }
             catch(Exception ex)
             {
+                ErrorMods.Add(modName);
                 WinchCore.Log.Error($"Error loading {modName}: {ex.ToString()}");
-                return false;
+                return;
             }
+        }
 
-            WinchCore.Log.Info($"Successfully loaded {modName}.");
-            return true;
+        private static void ExecuteModAssemblies()
+        {
+            foreach(string modName in RegisteredAssemblies.Keys)
+                ExecuteModAssembly(modName);
+        }
+
+        internal static void ExecuteModAssembly(string modName)
+        {
+            if (LoadedMods.Contains(modName) || ErrorMods.Contains(modName))
+                return;
+
+            try
+            {
+                RegisteredAssemblies[modName].ExecuteAssembly();
+                LoadedMods.Add(modName);
+                WinchCore.Log.Info($"Successfully initialized {modName}.");
+            }
+            catch(Exception ex)
+            {
+                ErrorMods.Add(modName);
+                WinchCore.Log.Error($"Error initializing {modName}: {ex.ToString()}");
+                return;
+            }
         }
     }
 }

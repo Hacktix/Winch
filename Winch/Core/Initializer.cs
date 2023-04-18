@@ -27,7 +27,7 @@ namespace Winch.Core
             string versionString = VersionUtil.GetVersion();
             GameManager.Instance.BuildInfo.BuildNumber += $"\nWinch {versionString}";
 
-            int modsLoaded = ModAssemblyLoader.LoadedAssemblies;
+            int modsLoaded = ModAssemblyLoader.LoadedMods.Count;
             string modsLoadedString = $"{modsLoaded} Mod{(modsLoaded > 1 ? "s" : "")} loaded";
             GameManager.Instance.BuildInfo.BuildNumber += $"\n{modsLoadedString}";
         }

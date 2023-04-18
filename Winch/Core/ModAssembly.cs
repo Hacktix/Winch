@@ -52,32 +52,40 @@ namespace Winch.Core
                 throw new NullReferenceException("Cannot execute assembly as LoadedAssembly is null");
 
             if(Metadata.ContainsKey("DefaultConfig"))
-            {
-                string defaultConfig = JsonConvert.SerializeObject(Metadata["DefaultConfig"], Formatting.Indented);
-                string modName = Path.GetFileName(BasePath);
-                ModConfig.RegisterDefaultConfig(modName, defaultConfig);
-            }
+                ProcessDefaultConfig();
 
-            if(Metadata.ContainsKey("Entrypoint"))
-            {
-                string entrypointSetting = Metadata["Entrypoint"].ToString();
-                if (!entrypointSetting.Contains("/"))
-                    throw new ArgumentException("Malformed Entrypoint in mod_meta.json");
+            if (Metadata.ContainsKey("Entrypoint"))
+                ProcessEntrypoint();
+        }
 
-                string entrypointTypeName = entrypointSetting.Split('/')[0];
-                string entrypointMethodName = entrypointSetting.Split('/')[1];
 
-                Type entrypointType = LoadedAssembly.GetType(entrypointTypeName);
-                if (entrypointType == null)
-                    throw new EntryPointNotFoundException($"Could not find type {entrypointTypeName} in Mod Assembly");
 
-                MethodInfo entrypoint = entrypointType.GetMethod(entrypointMethodName);
-                if(entrypoint == null)
-                    throw new EntryPointNotFoundException($"Could not find method {entrypointTypeName} in type {entrypointTypeName} in Mod Assembly");
+        private void ProcessDefaultConfig()
+        {
+            string defaultConfig = JsonConvert.SerializeObject(Metadata["DefaultConfig"], Formatting.Indented);
+            string modName = Path.GetFileName(BasePath);
+            ModConfig.RegisterDefaultConfig(modName, defaultConfig);
+        }
 
-                WinchCore.Log.Debug($"Invoking entrypoint {entrypointType}.{entrypointMethodName}...");
-                entrypoint.Invoke(null, new object[0]);
-            }
+        private void ProcessEntrypoint()
+        {
+            string entrypointSetting = Metadata["Entrypoint"].ToString();
+            if (!entrypointSetting.Contains("/"))
+                throw new ArgumentException("Malformed Entrypoint in mod_meta.json");
+
+            string entrypointTypeName = entrypointSetting.Split('/')[0];
+            string entrypointMethodName = entrypointSetting.Split('/')[1];
+
+            Type entrypointType = LoadedAssembly.GetType(entrypointTypeName);
+            if (entrypointType == null)
+                throw new EntryPointNotFoundException($"Could not find type {entrypointTypeName} in Mod Assembly");
+
+            MethodInfo entrypoint = entrypointType.GetMethod(entrypointMethodName);
+            if (entrypoint == null)
+                throw new EntryPointNotFoundException($"Could not find method {entrypointTypeName} in type {entrypointTypeName} in Mod Assembly");
+
+            WinchCore.Log.Debug($"Invoking entrypoint {entrypointType}.{entrypointMethodName}...");
+            entrypoint.Invoke(null, new object[0]);
         }
     }
 }

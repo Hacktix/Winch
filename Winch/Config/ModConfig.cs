@@ -46,7 +46,6 @@ namespace Winch.Config
         public static void RegisterDefaultConfig(string modName, string config)
         {
             DefaultConfigs.Add(modName, config);
-            WinchCore.Log.Debug($"Registered default config for {modName}: {config}");
         }
     }
 }
