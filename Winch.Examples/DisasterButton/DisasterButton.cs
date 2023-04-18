@@ -25,6 +25,8 @@ namespace DisasterButton
             WorldEventData worldEvent = GameManager.Instance.DataLoader.allWorldEvents[index];
             WinchCore.Log.Debug($"Spawning event No. {index}: {worldEvent.name}");
             GameManager.Instance.WorldEventManager.DoEvent(worldEvent);
+
+            GameManager.Instance.UI.ShowNotificationWithColor(NotificationType.SPOOKY_EVENT, "notification.disaster-button", GameManager.Instance.LanguageManager.GetColorCode(DredgeColorTypeEnum.CRITICAL));
         }
     }
 }

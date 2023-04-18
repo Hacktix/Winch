@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Localization.Settings;
 using Winch.Config;
 using Winch.Core;
 using Winch.Core.API;
@@ -17,6 +18,8 @@ namespace DisasterButton
             GameObject gameObject = new GameObject();
             gameObject.AddComponent<DisasterButton>();
             GameObject.DontDestroyOnLoad(gameObject);
+
+            LocalizationSettings.StringDatabase.GetTable(LanguageManager.STRING_TABLE).AddEntry("notification.disaster-button", "A sudden chill runs down your spine.");
         }
     }
 }

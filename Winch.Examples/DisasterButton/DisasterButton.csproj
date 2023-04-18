@@ -29,7 +29,9 @@
 		<Reference Include="UnityEngine.dll" HintPath="$(DredgePath)/DREDGE_Data/Managed/UnityEngine.dll" Private="False" />
 		<Reference Include="UnityEngine.CoreModule.dll" HintPath="$(DredgePath)/DREDGE_Data/Managed/UnityEngine.CoreModule.dll" Private="False" />
 		<Reference Include="UnityEngine.InputLegacyModule.dll" HintPath="$(DredgePath)/DREDGE_Data/Managed/UnityEngine.InputLegacyModule.dll" Private="False" />
+		<Reference Include="UnityEngine.LocalizationModule.dll" HintPath="$(DredgePath)/DREDGE_Data/Managed/UnityEngine.LocalizationModule.dll" Private="False" />
 		<Reference Include="Unity.ResourceManager.dll" HintPath="$(DredgePath)/DREDGE_Data/Managed/Unity.ResourceManager.dll" Private="False" />
+		<Reference Include="Unity.Localization.dll" HintPath="$(DredgePath)/DREDGE_Data/Managed/Unity.Localization.dll" Private="False" />
 		<Reference Include="Sirenix.Serialization.dll" HintPath="$(DredgePath)/DREDGE_Data/Managed/Sirenix.Serialization.dll" Private="False" />
 	</ItemGroup>
 
