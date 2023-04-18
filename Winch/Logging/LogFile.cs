@@ -6,7 +6,7 @@ namespace Winch.Logging
 {
     public class LogFile
     {
-        private StreamWriter _logWriter;
+        private string LogPath;
 
         private static string DefaultLogfile()
         {
@@ -27,13 +27,12 @@ namespace Winch.Logging
             if (File.Exists(logPath))
                 File.Delete(logPath);
 
-            _logWriter = new StreamWriter(File.OpenWrite(logPath));
+            LogPath = logPath;
         }
 
         public void Write(string message)
         {
-            _logWriter.WriteLine(message);
-            _logWriter.Flush();
+            File.AppendAllText(LogPath, message + Environment.NewLine);
         }
     }
 }
