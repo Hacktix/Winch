@@ -9,7 +9,7 @@ namespace Winch.Util
     internal class VersionUtil
     {
         private static readonly string Prefix = "alpha";
-        private static readonly string[] ValidPrefixes = new string[] { "alpha", "beta", null };
+        private static readonly string[] ValidPrefixes = new string[] { "alpha", "beta", "" };
         private static Regex VersionRegex = new Regex(@"(?:([a-z]+)-)?(\d+)\.(\d+)", RegexOptions.Compiled);
 
         internal static string GetVersion()
