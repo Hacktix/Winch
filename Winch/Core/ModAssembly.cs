@@ -55,6 +55,11 @@ namespace Winch.Core
 
             WinchCore.Log.Debug($"Initializing ModAssembly {LoadedAssembly.GetName().Name}...");
 
+            if (!Metadata.ContainsKey("Version"))
+                throw new MissingFieldException("No 'Version' field found in Mod Metadata.");
+            else if (!VersionUtil.ValidateVersion(Metadata["Version"].ToString()))
+                throw new FormatException("Mod Version has invalid format.");
+
             if (!Metadata.ContainsKey("MinWinchVersion"))
                 WinchCore.Log.Warn($"No MinWinchVersion defined. Mod will load anyway, but version conflicts may occur!");
             else
@@ -87,7 +92,9 @@ namespace Winch.Core
             foreach (string dep in deps)
             {
                 WinchCore.Log.Debug($"Processing dependency {dep}");
-                ModAssemblyLoader.ExecuteModAssembly(dep);
+                string depName = dep.Contains("@") ? dep.Split('@')[0] : dep;
+                string depVersion = dep.Contains("@") ? dep.Split('@')[1] : null;
+                ModAssemblyLoader.ExecuteModAssembly(depName, depVersion);
             }
         }
 

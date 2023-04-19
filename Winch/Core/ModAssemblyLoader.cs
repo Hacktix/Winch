@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using Winch.Util;
 
 namespace Winch.Core
 {
@@ -47,7 +48,7 @@ namespace Winch.Core
                 ExecuteModAssembly(modName);
         }
 
-        internal static void ExecuteModAssembly(string modName)
+        internal static void ExecuteModAssembly(string modName, string minVersion = null)
         {
             if (LoadedMods.Contains(modName) || ErrorMods.Contains(modName))
                 return;
@@ -57,6 +58,12 @@ namespace Winch.Core
                 ErrorMods.Add(modName);
                 WinchCore.Log.Error($"Mod not loaded: {modName}");
                 return;
+            }
+
+            if(minVersion != null)
+            {
+                if (!VersionUtil.IsSameOrNewer(RegisteredAssemblies[modName].Metadata["Version"].ToString(), minVersion))
+                    throw new Exception($"Cannot satisfy minimum version constraint {minVersion} for {modName}");
             }
 
             try

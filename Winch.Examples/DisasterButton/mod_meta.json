@@ -1,4 +1,5 @@
 {
+  "Version": "1.0",
   "ModAssembly": "DisasterButton.dll",
   "Entrypoint": "DisasterButton.Loader/Initialize",
   "DefaultConfig": {
