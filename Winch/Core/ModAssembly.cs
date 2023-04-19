@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using Winch.Config;
+using Winch.Util;
 
 namespace Winch.Core
 {
@@ -53,6 +54,20 @@ namespace Winch.Core
                 throw new NullReferenceException("Cannot execute assembly as LoadedAssembly is null");
 
             WinchCore.Log.Debug($"Initializing ModAssembly {LoadedAssembly.GetName().Name}...");
+
+            if (!Metadata.ContainsKey("MinWinchVersion"))
+                WinchCore.Log.Warn($"No MinWinchVersion defined. Mod will load anyway, but version conflicts may occur!");
+            else
+            {
+                string minVer = Metadata["MinWinchVersion"].ToString();
+                string winchVer = VersionUtil.GetComparableVersion();
+
+                if (!VersionUtil.ValidateVersion(minVer))
+                    throw new FormatException("MinWinchVersion not in correct format.");
+
+                if (!VersionUtil.IsSameOrNewer(winchVer, minVer))
+                    throw new Exception("Mod requires a version of Winch higher than the one installed.");
+            }
 
             if (Metadata.ContainsKey("DefaultConfig"))
                 ProcessDefaultConfig();
