@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.IO;
+using Winch.Core;
 
 namespace Winch.Util
 {
@@ -18,6 +21,18 @@ namespace Winch.Util
             if (!StringDatabase.ContainsKey(locale)) return null;
             if (!StringDatabase[locale].ContainsKey(key)) return null;
             return StringDatabase[locale][key];
+        }
+
+        internal static void LoadLocalizationFile(string path)
+        {
+            string locale = Path.GetFileNameWithoutExtension(path);
+            string fileText = File.ReadAllText(path);
+            Dictionary<string, string> dict = JsonConvert.DeserializeObject<Dictionary<string, string>>(fileText);
+
+            foreach(string key in dict.Keys)
+                AddLocalizedString(locale, key, dict[key]);
+
+            WinchCore.Log.Debug($"Loaded {dict.Keys.Count} localized string(s) from {path}");
         }
     }
 }

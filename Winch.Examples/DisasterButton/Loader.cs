@@ -9,9 +9,6 @@ namespace DisasterButton
         public static void Initialize()
         {
             DredgeEvent.ManagersLoaded += InitializeDisasterButton;
-
-            LocalizationUtil.AddLocalizedString("de", "notification.disaster-button", "Ein kalter Schauer läuft deinen Rücken hinunter.");
-            LocalizationUtil.AddLocalizedString("en", "notification.disaster-button", "A sudden chill runs down your spine.");
         }
 
         private static void InitializeDisasterButton(object sender, System.EventArgs e)

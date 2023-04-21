@@ -12,6 +12,8 @@ namespace Winch.Core
         {
             WinchCore.Log.Debug("Initializer started.");
 
+            AssetLoader.LoadAssets();
+
             InitializeVersionLabel();
 
             if(WinchConfig.GetProperty("EnableDeveloperConsole", false))

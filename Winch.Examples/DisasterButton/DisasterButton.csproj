@@ -36,6 +36,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<None Update="Assets\Localization\de.json">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="Assets\Localization\en.json">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
 		<None Update="mod_meta.json">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
