@@ -21,16 +21,13 @@
 	<ItemGroup>
 		<Reference Include="Assembly-CSharp.dll" HintPath="$(DredgePath)/DREDGE_Data/Managed/Assembly-CSharp.dll" Private="False" />
 		<Reference Include="Assembly-CSharp-firstpass.dll" HintPath="$(DredgePath)/DREDGE_Data/Managed/Assembly-CSharp-firstpass.dll" Private="False" />
-		<Reference Include="Unity.Localization">
-		  <HintPath>D:\SteamLibrary\steamapps\common\DREDGE\DREDGE_Data\Managed\Unity.Localization.dll</HintPath>
-		</Reference>
 	</ItemGroup>
 
 	<ItemGroup>
 		<Reference Include="UnityEngine.dll" HintPath="$(DredgePath)/DREDGE_Data/Managed/UnityEngine.dll" Private="False" />
 		<Reference Include="UnityEngine.CoreModule.dll" HintPath="$(DredgePath)/DREDGE_Data/Managed/UnityEngine.CoreModule.dll" Private="False" />
-		<Reference Include="UnityEngine.Localization.dll" HintPath="$(DredgePath)/DREDGE_Data/Managed/UnityEngine.Localization.dll" Private="False" />
 		<Reference Include="Unity.ResourceManager.dll" HintPath="$(DredgePath)/DREDGE_Data/Managed/Unity.ResourceManager.dll" Private="False" />
+		<Reference Include="Unity.Localization.dll" HintPath="$(DredgePath)/DREDGE_Data/Managed/Unity.Localization.dll" Private="False" />
 	</ItemGroup>
 
 	<ItemGroup>
