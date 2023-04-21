@@ -11,12 +11,12 @@ namespace Winch.Patches.API
     {
         public static void Prefix(ItemManager __instance, AsyncOperationHandle<IList<ItemData>> handle)
         {
-            DredgeEvent.TriggerItemsLoaded(__instance, handle, true);
+            DredgeEvent.AddressableEvents.ItemsLoaded.Trigger(__instance, handle, true);
         }
 
         public static void Postfix(ItemManager __instance, AsyncOperationHandle<IList<ItemData>> handle)
         {
-            DredgeEvent.TriggerItemsLoaded(__instance, handle, false);
+            DredgeEvent.AddressableEvents.ItemsLoaded.Trigger(__instance, handle, false);
         }
     }
 }

@@ -11,12 +11,12 @@ namespace Winch.Patches.API
     {
         public static void Prefix(DataLoader __instance, AsyncOperationHandle<IList<MapMarkerData>> handle)
         {
-            DredgeEvent.TriggerMapMarkersLoaded(__instance, handle, true);
+            DredgeEvent.AddressableEvents.MapMarkersLoaded.Trigger(__instance, handle, true);
         }
 
         public static void Postfix(DataLoader __instance, AsyncOperationHandle<IList<MapMarkerData>> handle)
         {
-            DredgeEvent.TriggerMapMarkersLoaded(__instance, handle, false);
+            DredgeEvent.AddressableEvents.MapMarkersLoaded.Trigger(__instance, handle, false);
         }
     }
 }
