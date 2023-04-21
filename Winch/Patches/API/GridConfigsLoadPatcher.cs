@@ -11,12 +11,12 @@ namespace Winch.Patches.API
     {
         public static void Prefix(DataLoader __instance, AsyncOperationHandle<IList<GridConfiguration>> handle)
         {
-            DredgeEvent.TriggerGridConfigsLoaded(__instance, handle, true);
+            DredgeEvent.AddressableEvents.GridConfigsLoaded.Trigger(__instance, handle, true);
         }
 
         public static void Postfix(DataLoader __instance, AsyncOperationHandle<IList<GridConfiguration>> handle)
         {
-            DredgeEvent.TriggerGridConfigsLoaded(__instance, handle, false);
+            DredgeEvent.AddressableEvents.GridConfigsLoaded.Trigger(__instance, handle, false);
         }
     }
 }

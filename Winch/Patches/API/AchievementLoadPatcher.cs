@@ -11,12 +11,12 @@ namespace Winch.Patches.API
     {
         public static void Prefix(AchievementManager __instance, AsyncOperationHandle<IList<AchievementData>> handle)
         {
-            DredgeEvent.TriggerAchievementsLoaded(__instance, handle, true);
+            DredgeEvent.AddressableEvents.AchievementsLoaded.Trigger(__instance, handle, true);
         }
 
         public static void Postfix(AchievementManager __instance, AsyncOperationHandle<IList<AchievementData>> handle)
         {
-            DredgeEvent.TriggerAchievementsLoaded(__instance, handle, false);
+            DredgeEvent.AddressableEvents.AchievementsLoaded.Trigger(__instance, handle, false);
         }
     }
 }
