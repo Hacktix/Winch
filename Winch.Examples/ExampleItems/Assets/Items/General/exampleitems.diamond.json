@@ -1,0 +1,20 @@
+﻿{
+  "itemNameKey": "exampleitems.diamond.name",
+  "itemDescriptionKey": "exampleitems.diamond.desc",
+  "itemType": "GENERAL",
+  "itemSubtype": "TRINKET",
+  "sprite": "exampleitems.diamond",
+  "itemColor": {
+    "r": 74,
+    "g": 237,
+    "b": 217,
+    "a": 10
+  },
+  "squishFactor": 1,
+  "value": 100,
+  "dimensions": [
+    "XX",
+    "XX"
+  ]
+}
+

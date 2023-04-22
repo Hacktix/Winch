@@ -1,0 +1,6 @@
+{
+  "Version": "1.0",
+  "ModAssembly": "ExampleItems.dll",
+  "Entrypoint": "ExampleItems.Loader/Initialize",
+  "MinWinchVersion": "alpha-1.1"
+}
