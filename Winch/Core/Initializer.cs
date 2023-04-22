@@ -12,7 +12,7 @@ namespace Winch.Core
         {
             WinchCore.Log.Debug("Initializer started.");
 
-            AssetLoader.LoadAssets();
+            InitializeAssetLoader();
 
             InitializeVersionLabel();
 
@@ -20,6 +20,13 @@ namespace Winch.Core
                 InitializeDevConsole();
 
             DredgeEvent.TriggerManagersLoaded();
+        }
+
+        private static void InitializeAssetLoader()
+        {
+            GameObject assetLoader = new GameObject();
+            assetLoader.AddComponent<AssetLoaderObject>();
+            Object.DontDestroyOnLoad(assetLoader);
         }
 
         private static void InitializeVersionLabel()

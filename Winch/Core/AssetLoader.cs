@@ -23,9 +23,10 @@ namespace Winch.Core
         private static void LoadAssetFolder(string path)
         {
             string localizationFolderPath = Path.Combine(path, "Localization");
+            string textureFolderPath = Path.Combine(path, "Textures");
 
-            if(Directory.Exists(localizationFolderPath))
-                LoadLocalizationFiles(localizationFolderPath);
+            if(Directory.Exists(localizationFolderPath)) LoadLocalizationFiles(localizationFolderPath);
+            if(Directory.Exists(textureFolderPath)) LoadTextureFiles(textureFolderPath);
         }
 
 
@@ -41,6 +42,22 @@ namespace Winch.Core
                 catch(Exception ex)
                 {
                     WinchCore.Log.Error($"Failed to load localization file {file}: {ex}");
+                }
+            }
+        }
+
+        private static void LoadTextureFiles(string textureFolderPath)
+        {
+            string[] textureFiles = Directory.GetFiles(textureFolderPath);
+            foreach (string file in textureFiles)
+            {
+                try
+                {
+                    TextureUtil.LoadTextureFromFile(file);
+                }
+                catch(Exception ex)
+                {
+                    WinchCore.Log.Error($"Failed to load texture file {file}: {ex}");
                 }
             }
         }

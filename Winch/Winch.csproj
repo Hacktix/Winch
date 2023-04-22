@@ -26,6 +26,7 @@
 	<ItemGroup>
 		<Reference Include="UnityEngine.dll" HintPath="$(DredgePath)/DREDGE_Data/Managed/UnityEngine.dll" Private="False" />
 		<Reference Include="UnityEngine.CoreModule.dll" HintPath="$(DredgePath)/DREDGE_Data/Managed/UnityEngine.CoreModule.dll" Private="False" />
+		<Reference Include="UnityEngine.ImageConversionModule.dll" HintPath="$(DredgePath)/DREDGE_Data/Managed/UnityEngine.ImageConversionModule.dll" Private="False" />
 		<Reference Include="Unity.ResourceManager.dll" HintPath="$(DredgePath)/DREDGE_Data/Managed/Unity.ResourceManager.dll" Private="False" />
 		<Reference Include="Unity.Localization.dll" HintPath="$(DredgePath)/DREDGE_Data/Managed/Unity.Localization.dll" Private="False" />
 	</ItemGroup>
