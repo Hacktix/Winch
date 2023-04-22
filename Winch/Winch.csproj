@@ -24,6 +24,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<Reference Include="Sirenix.Serialization.dll" HintPath="$(DredgePath)/DREDGE_Data/Managed/Sirenix.Serialization.dll" Private="False" />
 		<Reference Include="UnityEngine.dll" HintPath="$(DredgePath)/DREDGE_Data/Managed/UnityEngine.dll" Private="False" />
 		<Reference Include="UnityEngine.CoreModule.dll" HintPath="$(DredgePath)/DREDGE_Data/Managed/UnityEngine.CoreModule.dll" Private="False" />
 		<Reference Include="UnityEngine.ImageConversionModule.dll" HintPath="$(DredgePath)/DREDGE_Data/Managed/UnityEngine.ImageConversionModule.dll" Private="False" />
