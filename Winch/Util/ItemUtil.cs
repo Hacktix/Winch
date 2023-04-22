@@ -34,7 +34,6 @@ namespace Winch.Util
                         if (defaultVal != null)
                             field.SetValue(item, defaultVal);
                     }
-                    WinchCore.Log.Debug($"{field.Name} : {field.GetValue(item)}");
                 }
                 catch(Exception ex)
                 {
