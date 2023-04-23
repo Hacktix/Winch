@@ -23,17 +23,6 @@ internal static class ItemUtil
         Dictionary<string, object> meta = JsonConvert.DeserializeObject<Dictionary<string, object>>(metaFile);
         meta["id"] = Path.GetFileNameWithoutExtension(metaPath);
 
-        if (!meta.ContainsKey("itemInsaneTitleKey"))
-        {
-            WinchCore.Log.Debug("WRITING INSANETITLE KEY");
-            //meta["itemInsaneTitleKey"] = meta["itemNameKey"];
-        }
-        if (!meta.ContainsKey("itemInsaneDescriptionKey"))
-        {
-            WinchCore.Log.Debug("WRITING INSANEDESC KEY");
-            //meta["itemInsaneDescriptionKey"] = meta["itemDescriptionKey"];
-        }
-
         T item = ScriptableObject.CreateInstance<T>();
         Type itemType = typeof(T);
         if (Converters.TryGetValue(itemType, out var converter))
