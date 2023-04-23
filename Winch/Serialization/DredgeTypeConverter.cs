@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
 using Winch.Core;
+
 // ReSharper disable HeapView.BoxingAllocation
 // ReSharper disable HeapView.PossibleBoxingAllocation
 
@@ -82,6 +83,7 @@ public class DredgeTypeConverter<T> : IDredgeTypeConverter
                     parsed.Add(new Vector2Int(x, y));
             }
         }
+
         return parsed;
     }
 }

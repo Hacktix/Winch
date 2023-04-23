@@ -42,5 +42,4 @@ public class SpatialItemDataConverter : ItemDataConverter
     {
         AddDefinitions(_definitions);
     }
-
 }

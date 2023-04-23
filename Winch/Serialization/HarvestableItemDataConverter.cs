@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+
 // ReSharper disable HeapView.BoxingAllocation
 
 namespace Winch.Serialization;
