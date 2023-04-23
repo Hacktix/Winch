@@ -6,7 +6,7 @@ namespace Winch.Util
 {
     public static class TextureUtil
     {
-        private static Dictionary<string, Texture2D> TextureMap = new Dictionary<string, Texture2D>();
+        private static Dictionary<string, Texture2D> TextureMap = new();
 
         public static Texture2D GetTexture(string key) => TextureMap[key];
 
