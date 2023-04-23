@@ -21,7 +21,7 @@ public class FishItemDataConverter : HarvestableItemDataConverter
         { "night", new( true, null) },
         { "canAppearInBaitBalls", new( true, null) },
         { "canBeInfected", new( false, null) },
-        { "cellsExcludedFromDisplayingInfection", new( new List<Vector2Int>(){new(0,0)}, o => ParseDimensions((JArray)o)) },
+        { "cellsExcludedFromDisplayingInfection", new( new List<Vector2Int>(){new(0,0)}, o => DredgeTypeHelpers.ParseDimensions((JArray)o)) },
     };
     
     public FishItemDataConverter()

@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
+using UnityEngine.Localization;
 using Winch.Core;
 
 // ReSharper disable HeapView.BoxingAllocation
@@ -14,14 +16,20 @@ namespace Winch.Serialization;
 public class DredgeTypeConverter<T> : IDredgeTypeConverter
 {
     private Dictionary<string, FieldDefinition> FieldDefinitions { get; } = new();
+    private Dictionary<string, string> Reroutes { get; } = new();
+    protected static Dictionary<(string TableId, string Text), LocalizedString> StringDefinitionCache { get; } = new();
 
     public void PopulateFields(object obj, Dictionary<string, object> data)
     {
+        ProcessDictionaryEntries(obj, data);
+        ProcessReroutes(obj, data);
+    }
+
+    private void ProcessDictionaryEntries(object obj, Dictionary<string, object> data)
+    {
         Type itemType = obj.GetType();
-        WinchCore.Log.Debug($"Processing {itemType}...");
         foreach (var field in itemType.GetRuntimeFields())
         {
-            WinchCore.Log.Debug($"    Field: {field.Name}");
             try
             {
                 if (data.TryGetValue(field.Name, out var value))
@@ -33,8 +41,13 @@ public class DredgeTypeConverter<T> : IDredgeTypeConverter
                 }
                 else
                 {
-                    field.SetValue(obj,
-                        FieldDefinitions.TryGetValue(field.Name, out var definition) ? definition.DefaultValue : null);
+                    if (FieldDefinitions.TryGetValue(field.Name, out var definition))
+                    {
+                        if (definition.DefaultValue != null)
+                        {
+                            field.SetValue(obj, definition.DefaultValue);
+                        }
+                    }
                 }
             }
             catch(Exception ex)
@@ -42,6 +55,23 @@ public class DredgeTypeConverter<T> : IDredgeTypeConverter
                 string configuredValue = data.TryGetValue(field.Name, out var value) ? value.ToString() : "UNDEFINED";
                 WinchCore.Log.Error($"Exception occurred while processing field '{field.Name}' (Configured: '{configuredValue}'): {ex}");
                 throw;
+            }
+        }
+    }
+
+    private void ProcessReroutes(object obj, Dictionary<string, object> data)
+    {
+        Type objectType = obj.GetType();
+        foreach (var rerouteKeyValPair in Reroutes)
+        {
+            var targetField = objectType.GetRuntimeFields().FirstOrDefault(field => field.Name == rerouteKeyValPair.Key);
+            var sourceField = objectType.GetRuntimeFields().FirstOrDefault(field => field.Name == rerouteKeyValPair.Value);
+            if (targetField != null && sourceField != null)
+            {
+                if (targetField.GetValue(obj) == null)
+                {
+                    targetField.SetValue(obj, sourceField.GetValue(obj));
+                }
             }
         }
     }
@@ -54,46 +84,11 @@ public class DredgeTypeConverter<T> : IDredgeTypeConverter
         }
     }
     
-    protected static TEnum GetEnumValue<TEnum>(object value) where TEnum : Enum
+    protected void AddReroutes(Dictionary<string, string> reroutes)
     {
-        return (TEnum)Enum.Parse(typeof(TEnum), value.ToString());
-    }
-
-    protected static Color GetColorFromJsonObject(object value)
-    {
-        return GetColorFromObject(JsonConvert.DeserializeObject<Dictionary<string, int>>(value.ToString()));
-    }
-
-    private static Color GetColorFromObject(Dictionary<string, int> color)
-    {
-        int r = 0, g = 0, b = 0, a = 255;
-        if (color.TryGetValue("r", out var value)) r = value;
-        if (color.TryGetValue("g", out var value1)) g = value1;
-        if (color.TryGetValue("b", out var value2)) b = value2;
-        if (color.TryGetValue("a", out var value3)) a = value3;
-        return new Color(r/255f, g/255f, b/255f, a/255f);
-    }
-    
-    protected static List<Vector2Int> ParseDimensions(JArray dimensions)
-    {
-        WinchCore.Log.Debug($"Parsing dimensions: {dimensions}");
-        var parsed = new List<Vector2Int>();
-        for(int y = 0; y < dimensions.Count; y++)
+        foreach (var reroute in reroutes)
         {
-            string line = dimensions[y].ToString();
-            for(int x = 0; x < line.Length; x++)
-            {
-                char pos = line[x];
-                if (pos != ' ')
-                    parsed.Add(new Vector2Int(x, y));
-            }
+            this.Reroutes.Add(reroute.Key, reroute.Value);
         }
-
-        foreach (var dim in parsed)
-        {
-            WinchCore.Log.Debug($"DimEntry : {dim.x}, {dim.y}");
-        }
-
-        return parsed;
     }
 }

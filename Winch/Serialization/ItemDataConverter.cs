@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Localization;
+using Winch.Core;
 using Winch.Util;
 
 // ReSharper disable HeapView.BoxingAllocation
@@ -10,17 +11,19 @@ namespace Winch.Serialization;
 
 public class ItemDataConverter : DredgeTypeConverter<ItemData>
 {
+    private const string ItemTableDefinition = "Items";
+
     private readonly Dictionary<string, FieldDefinition> _definitions = new()
     {
         { "id", new( Guid.NewGuid().ToString(), null) },
-        { "itemNameKey", new( null, o=> CreateLocalizedString("Items", o.ToString())) },
-        { "itemDescriptionKey", new( null, o=> CreateLocalizedString("Items", o.ToString())) },
-        { "itemInsaneTitleKey", new(null, o=> CreateLocalizedString("Items", o.ToString())) },
-        { "itemInsaneDescriptionKey", new(null, o=> CreateLocalizedString("Items", o.ToString())) },
-        { "itemType", new(ItemType.GENERAL, o => GetEnumValue<ItemType>(o)) },
-        { "itemSubtype", new(ItemSubtype.GENERAL, o => GetEnumValue<ItemSubtype>(o)) },
-        { "tooltipTextColor", new(Color.white, o => GetColorFromJsonObject(o)) },
-        { "tooltipNotesColor", new(Color.white, o => GetColorFromJsonObject(o)) },
+        { "itemNameKey", new( null, o=> CreateLocalizedString(ItemTableDefinition, o.ToString())) },
+        { "itemDescriptionKey", new( null, o=> CreateLocalizedString(ItemTableDefinition, o.ToString())) },
+        { "itemInsaneTitleKey", new(null, o=> CreateLocalizedString(ItemTableDefinition, o.ToString())) },
+        { "itemInsaneDescriptionKey", new(null, o=> CreateLocalizedString(ItemTableDefinition, o.ToString())) },
+        { "itemType", new(ItemType.GENERAL, o => DredgeTypeHelpers.GetEnumValue<ItemType>(o)) },
+        { "itemSubtype", new(ItemSubtype.GENERAL, o => DredgeTypeHelpers.GetEnumValue<ItemSubtype>(o)) },
+        { "tooltipTextColor", new(Color.white, o => DredgeTypeHelpers.GetColorFromJsonObject(o)) },
+        { "tooltipNotesColor", new(Color.white, o => DredgeTypeHelpers.GetColorFromJsonObject(o)) },
         { "itemTypeIcon", new(null, o => TextureUtil.GetSprite(o.ToString())) },
         { "harvestParticlePrefab", new(null, null) },
         { "overrideHarvestParticleDepth", new(false, null) },
@@ -28,14 +31,27 @@ public class ItemDataConverter : DredgeTypeConverter<ItemData>
         { "flattenParticleShape", new(false, null) },
         { "availableInDemo", new(false, null) },
     };
-    
+
+    private readonly Dictionary<string, string> _reroutes = new()
+    {
+        { "itemInsaneTitleKey", "itemNameKey" }, { "itemInsaneDescriptionKey", "itemDescriptionKey" }
+    };
+
     public ItemDataConverter()
     {
         AddDefinitions(_definitions);
+        AddReroutes(_reroutes);
     }
 
     private static LocalizedString CreateLocalizedString(string key, string value)
     {
-        return new (key, value);
+        var keyValueTuple = (key, value);
+        if (StringDefinitionCache.TryGetValue(keyValueTuple, out LocalizedString cached))
+        {
+            return cached;
+        }
+        var localizedString = new LocalizedString(key, value);
+        StringDefinitionCache.Add(keyValueTuple, localizedString);
+        return localizedString;
     }
 }
