@@ -37,8 +37,7 @@ namespace Winch.Core
             catch(Exception ex)
             {
                 ErrorMods.Add(modName);
-                WinchCore.Log.Error($"Error loading {modName}: {ex.ToString()}");
-                return;
+                WinchCore.Log.Error($"Error loading {modName}: {ex}");
             }
         }
 
@@ -75,8 +74,7 @@ namespace Winch.Core
             catch(Exception ex)
             {
                 ErrorMods.Add(modName);
-                WinchCore.Log.Error($"Error initializing {modName}: {ex.ToString()}");
-                return;
+                WinchCore.Log.Error($"Error initializing {modName}: {ex}");
             }
         }
     }

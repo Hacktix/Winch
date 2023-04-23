@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Reflection;
-using System.Runtime.CompilerServices;
 using Winch.Config;
 
 namespace Winch.Logging
@@ -54,12 +52,12 @@ namespace Winch.Logging
             string callingClass = "";
             string callingMethod = "";
             string callingAssembly = "";
-            for(int i = 1; i < frames.Length; i++)
+            for(int i = 1; i < frames?.Length; i++)
             {
                 callingMethod = frames[i].GetMethod().Name;
-                callingClass = frames[i].GetMethod().ReflectedType.Name;
-                callingAssembly = frames[i].GetMethod().ReflectedType.Assembly.GetName().Name;
-                if(!callingClass.Equals("Logger"))
+                callingClass = frames[i].GetMethod().ReflectedType?.Name;
+                callingAssembly = frames[i].GetMethod().ReflectedType?.Assembly.GetName().Name;
+                if(callingClass != null && !callingClass.Equals("Logger"))
                     break;
             }
 

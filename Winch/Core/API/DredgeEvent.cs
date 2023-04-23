@@ -1,5 +1,5 @@
 ﻿using System;
-using Winch.Core.Events.Addressables;
+using Winch.Core.API.Events.Addressables;
 
 namespace Winch.Core.API
 {
