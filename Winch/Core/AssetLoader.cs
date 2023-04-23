@@ -31,8 +31,6 @@ namespace Winch.Core
             if(Directory.Exists(itemFolderPath)) LoadItemFiles(itemFolderPath);
         }
 
-
-
         private static void LoadItemFiles(string itemFolderPath)
         {
             string spatialItemsPath = Path.Combine(itemFolderPath, "General");
