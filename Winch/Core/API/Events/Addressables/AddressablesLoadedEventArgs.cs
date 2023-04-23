@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
-namespace Winch.Core.Events.Addressables
+namespace Winch.Core.API.Events.Addressables
 {
     public struct AddressablesLoadedEventArgs<T>
     {

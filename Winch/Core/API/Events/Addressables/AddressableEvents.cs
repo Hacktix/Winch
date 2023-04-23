@@ -1,4 +1,4 @@
-﻿namespace Winch.Core.Events.Addressables
+﻿namespace Winch.Core.API.Events.Addressables
 {
     public class AddressableEvents
     {
