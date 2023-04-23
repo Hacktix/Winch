@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
-using Newtonsoft.Json;
 using Winch.Util;
 
 // ReSharper disable HeapView.BoxingAllocation
 
 namespace Winch.Serialization;
 
-public class SpatialItemDataConverter : DredgeTypeConverter<SpatialItemData>
+public class SpatialItemDataConverter : ItemDataConverter
 {
     private SpatialItemDataConverter instance;
     public SpatialItemDataConverter Instance
