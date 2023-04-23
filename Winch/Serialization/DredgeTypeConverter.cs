@@ -37,7 +37,7 @@ public class DredgeTypeConverter<T> : IDredgeTypeConverter
             {
                 string configuredValue = data.TryGetValue(field.Name, out var value) ? FieldDefinitions[field.Name].Parser(value).ToString() : "null";
                 WinchCore.Log.Error($"Exception occurred while processing field '{field.Name}' (Configured: '{configuredValue}'): {ex}");
-                throw ex;
+                throw;
             }
         }
     }
