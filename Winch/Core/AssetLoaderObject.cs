@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Winch.Core.API;
 
 namespace Winch.Core
 {
@@ -7,6 +8,7 @@ namespace Winch.Core
         public void Start()
         {
             AssetLoader.LoadAssets();
+            DredgeEvent.TriggerModAssetsLoaded();
         }
     }
 }

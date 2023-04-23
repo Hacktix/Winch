@@ -13,5 +13,12 @@ namespace Winch.Core.API
             WinchCore.Log.Debug("Triggered ManagersLoaded event");
             ManagersLoaded?.Invoke(null, null);
         }
+
+        public static event EventHandler ModAssetsLoaded;
+        public static void TriggerModAssetsLoaded()
+        {
+            WinchCore.Log.Debug("Triggered ModAssetsLoaded event");
+            ModAssetsLoaded?.Invoke(null, null);
+        }
     }
 }
