@@ -17,25 +17,29 @@ public class DredgeTypeConverter<T> : IDredgeTypeConverter
 
     public void PopulateFields(object obj, Dictionary<string, object> data)
     {
-        Type itemType = typeof(T);
+        Type itemType = obj.GetType();
+        WinchCore.Log.Debug($"Processing {itemType}...");
         foreach (var field in itemType.GetRuntimeFields())
         {
+            WinchCore.Log.Debug($"    Field: {field.Name}");
             try
             {
                 if (data.TryGetValue(field.Name, out var value))
                 {
-                    field.SetValue(obj, FieldDefinitions[field.Name].Parser(value));
+                    field.SetValue(obj,
+                        FieldDefinitions[field.Name].Parser != null
+                            ? FieldDefinitions[field.Name].Parser(value)
+                            : value);
                 }
                 else
                 {
-                    object defaultVal = FieldDefinitions[field.Name];
-                    if (defaultVal != null)
-                        field.SetValue(obj, defaultVal);
+                    field.SetValue(obj,
+                        FieldDefinitions.TryGetValue(field.Name, out var definition) ? definition.DefaultValue : null);
                 }
             }
             catch(Exception ex)
             {
-                string configuredValue = data.TryGetValue(field.Name, out var value) ? FieldDefinitions[field.Name].Parser(value).ToString() : "null";
+                string configuredValue = data.TryGetValue(field.Name, out var value) ? value.ToString() : "UNDEFINED";
                 WinchCore.Log.Error($"Exception occurred while processing field '{field.Name}' (Configured: '{configuredValue}'): {ex}");
                 throw;
             }
@@ -72,6 +76,7 @@ public class DredgeTypeConverter<T> : IDredgeTypeConverter
     
     protected static List<Vector2Int> ParseDimensions(JArray dimensions)
     {
+        WinchCore.Log.Debug($"Parsing dimensions: {dimensions}");
         var parsed = new List<Vector2Int>();
         for(int y = 0; y < dimensions.Count; y++)
         {
@@ -82,6 +87,11 @@ public class DredgeTypeConverter<T> : IDredgeTypeConverter
                 if (pos != ' ')
                     parsed.Add(new Vector2Int(x, y));
             }
+        }
+
+        foreach (var dim in parsed)
+        {
+            WinchCore.Log.Debug($"DimEntry : {dim.x}, {dim.y}");
         }
 
         return parsed;
