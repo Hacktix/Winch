@@ -7,12 +7,6 @@ namespace Winch.Serialization;
 
 public class SpatialItemDataConverter : ItemDataConverter
 {
-    private SpatialItemDataConverter instance;
-    public SpatialItemDataConverter Instance
-    {
-        get { return instance ??= new(); }
-    }
-
     private readonly Dictionary<string, FieldDefinition> _definitions = new()
     {
         { "canBeSoldByPlayer", new(true, null)},
