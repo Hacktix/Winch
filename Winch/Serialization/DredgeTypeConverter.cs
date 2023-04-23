@@ -10,11 +10,11 @@ using Winch.Core;
 
 namespace Winch.Serialization;
 
-public class DredgeTypeConverter<T>
+public class DredgeTypeConverter<T> : IDredgeTypeConverter
 {
     private Dictionary<string, FieldDefinition> FieldDefinitions { get; } = new();
 
-    public void PopulateFields(T obj, Dictionary<string, object> data)
+    public void PopulateFields(object obj, Dictionary<string, object> data)
     {
         Type itemType = typeof(T);
         foreach (var field in itemType.GetRuntimeFields())

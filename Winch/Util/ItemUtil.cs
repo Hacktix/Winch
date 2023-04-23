@@ -3,12 +3,19 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using Winch.Core;
 using Winch.Serialization;
 
 namespace Winch.Util;
 
 internal static class ItemUtil
 {
+    private static Dictionary<Type, IDredgeTypeConverter> Converters = new()
+    {
+        { typeof(FishItemData), new FishItemDataConverter() },
+        { typeof(SpatialItemData), new SpatialItemDataConverter() },
+    };
+
     internal static void AddItemFromMeta<T>(string metaPath) where T : ItemData
     {
         string metaFile = File.ReadAllText(metaPath);
@@ -18,15 +25,14 @@ internal static class ItemUtil
         T item = ScriptableObject.CreateInstance<T>();
         Type itemType = typeof(T);
         
-        //TODO: Think of a better way of doing this.... Maybe a dictionary of converters?
-        switch(itemType)
+        if (Converters.TryGetValue(itemType, out var converter))
         {
-            case { } fishItemData when fishItemData == typeof(FishItemData):
-                break;
-            case { } spatialItemData when spatialItemData == typeof(SpatialItemData):
-                break;
-        };
-
-        GameManager.Instance.ItemManager.allItems.Add(item);
+            converter.PopulateFields(item, meta);
+            GameManager.Instance.ItemManager.allItems.Add(item);
+        }
+        else
+        {
+            WinchCore.Log.Error($"No converter found for type {itemType}");
+        }
     }
 }
