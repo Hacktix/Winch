@@ -1,11 +1,11 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using Winch.Core;
 using Winch.Serialization;
+using Winch.Serialization.Item;
 
 namespace Winch.Util;
 
@@ -19,20 +19,17 @@ internal static class ItemUtil
 
     internal static void AddItemFromMeta<T>(string metaPath) where T : ItemData
     {
-        string metaFile = File.ReadAllText(metaPath);
-        Dictionary<string, object> meta = JsonConvert.DeserializeObject<Dictionary<string, object>>(metaFile);
-        meta["id"] = Path.GetFileNameWithoutExtension(metaPath);
+        var meta = UtilHelpers.ParseMeta(metaPath);
 
-        T item = ScriptableObject.CreateInstance<T>();
-        Type itemType = typeof(T);
-        if (Converters.TryGetValue(itemType, out var converter))
+        if (meta == null)
         {
-            converter.PopulateFields(item, meta);
+            WinchCore.Log.Error($"Meta file {metaPath} is empty");
+            return;
+        }
+
+        var item = UtilHelpers.GetScriptableObjectFromMeta<T>(meta, metaPath);
+
+        if (UtilHelpers.PopulateObjectFromMeta<T>(item, meta, Converters))
             GameManager.Instance.ItemManager.allItems.Add(item);
-        }
-        else
-        {
-            WinchCore.Log.Error($"No converter found for type {itemType}");
-        }
     }
 }
