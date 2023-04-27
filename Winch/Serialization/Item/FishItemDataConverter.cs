@@ -4,7 +4,7 @@ using UnityEngine;
 
 // ReSharper disable HeapView.BoxingAllocation
 
-namespace Winch.Serialization;
+namespace Winch.Serialization.Item;
 
 public class FishItemDataConverter : HarvestableItemDataConverter
 {
@@ -12,7 +12,7 @@ public class FishItemDataConverter : HarvestableItemDataConverter
     {
         { "minSizeCentimeters", new( 0f, o => float.Parse(o.ToString())) },
         { "maxSizeCentimeters", new( 0f, o => float.Parse(o.ToString())) },
-        { "aberrations", new( null, null) },
+        { "aberrations", new( new List<FishItemData>(), null) },
         { "isAberration", new( false, null) },
         { "nonAberrationParent", new( null, null) },
         { "minWorldPhaseRequired", new( 0, o => int.Parse(o.ToString())) },

@@ -13,6 +13,14 @@
 		<Deterministic>False</Deterministic>
 	</PropertyGroup>
 
+	<PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+	  <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+	  <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+	</PropertyGroup>
+
 	<ItemGroup>
 		<ProjectReference Include="..\..\Winch\Winch.csproj">
 			<Private>False</Private>
@@ -48,6 +56,15 @@
 		<None Update="mod_meta.json">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
+		<None Update="Assets\Items\Fish\exampleitems.mccod.json">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+    <None Update="Assets\Textures\exampleitems.mccod.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\Textures\exampleitems.mcicon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
 	</ItemGroup>
 
 </Project>

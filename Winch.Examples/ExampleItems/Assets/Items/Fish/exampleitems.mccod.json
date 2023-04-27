@@ -1,0 +1,28 @@
+﻿{
+  "Name": "Raw Cod",
+  "itemNameKey": "exampleitems.mccod.name",
+  "itemDescriptionKey": "exampleitems.mccod.desc",
+  "itemType": "GENERAL",
+  "itemSubtype": "FISH",
+  "sprite": "exampleitems.mccod",
+  "itemColor": {
+    "r": 47,
+    "g": 64,
+    "b": 63,
+    "a": 8
+  },
+  "squishFactor": 1,
+  "value": 5,
+  "dimensions": [
+    "X"
+  ],
+  "minSizeCentimeters": 5,
+  "maxSizeCentimeters": 10,
+  "harvestMinigameType": "DREDGE_RADIAL",
+  "perSpotMin": 3,
+  "perSpotMax": 8,
+  "harvestPOICategory": "FISH_SMALL",
+  "harvestableType": "SHALLOW",
+  "harvestDifficulty": "VERY_EASY", 
+}
+

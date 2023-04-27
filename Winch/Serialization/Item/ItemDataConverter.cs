@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Localization;
-using Winch.Core;
 using Winch.Util;
 
 // ReSharper disable HeapView.BoxingAllocation
 
-namespace Winch.Serialization;
+namespace Winch.Serialization.Item;
 
 public class ItemDataConverter : DredgeTypeConverter<ItemData>
 {
