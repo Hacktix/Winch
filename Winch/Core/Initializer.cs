@@ -1,4 +1,5 @@
 ﻿using CommandTerminal;
+using Octokit;
 using UnityEngine;
 using Winch.Config;
 using Winch.Core.API;
@@ -15,6 +16,8 @@ namespace Winch.Core
             InitializeAssetLoader();
 
             InitializeVersionLabel();
+
+            CheckForUpdate();
 
             if(WinchConfig.GetProperty("EnableDeveloperConsole", false))
                 InitializeDevConsole();
@@ -47,6 +50,25 @@ namespace Winch.Core
             GameObject term = new GameObject();
             term.AddComponent<Terminal>();
             UnityEngine.Object.DontDestroyOnLoad(term);
+        }
+
+        private static async void CheckForUpdate()
+        {
+            var client = new GitHubClient(new ProductHeaderValue("WinchFetchLatest"));
+            var releases = await client.Repository.Release.GetAll("Hacktix", "Winch");
+            var latest = releases[0];
+
+            string updateAvailableString;
+            if (VersionUtil.IsSameOrNewer(VersionUtil.GetVersion(), latest.TagName))
+            {
+                updateAvailableString = $"Latest version installed.";
+            }
+            else
+            {
+                updateAvailableString = $"Update {latest.TagName} available.";
+            }
+
+            GameManager.Instance.BuildInfo.BuildNumber += $"\n{updateAvailableString}";
         }
     }
 }
