@@ -65,7 +65,6 @@ namespace Winch.Properties {
         ///	&quot;WriteLogsToFile&quot;: true,
         ///	&quot;LogLevel&quot;: &quot;DEBUG&quot;,
         ///	&quot;LogsFolder&quot;: &quot;Logs&quot;,
-        ///	&quot;DetailedLogSources&quot;: false,
         ///	&quot;EnableDeveloperConsole&quot;: true
         ///}.
         /// </summary>
