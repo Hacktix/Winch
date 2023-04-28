@@ -47,7 +47,7 @@ namespace Winch.Core
                 ExecuteModAssembly(modName);
         }
 
-        internal static void ExecuteModAssembly(string modName, string minVersion = null)
+        internal static void ExecuteModAssembly(string modName, string? minVersion = null)
         {
             if (LoadedMods.Contains(modName) || ErrorMods.Contains(modName))
                 return;

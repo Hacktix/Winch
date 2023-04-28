@@ -15,7 +15,7 @@ public static class DredgeTypeHelpers
 
     public static Color GetColorFromJsonObject(object value)
     {
-        var jsonDict = JsonConvert.DeserializeObject<Dictionary<string, int>>(value.ToString());
+        var jsonDict = JsonConvert.DeserializeObject<Dictionary<string, int>>(value.ToString()) ?? throw new InvalidOperationException("Unable to parse color.");
         return GetColorFromJsonDictionary(jsonDict);
     }
 
