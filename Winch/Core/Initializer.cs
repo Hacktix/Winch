@@ -1,9 +1,11 @@
 ﻿using CommandTerminal;
-using Octokit;
+using System.Net.Http;
+using System.Text.RegularExpressions;
 using UnityEngine;
 using Winch.Config;
 using Winch.Core.API;
 using Winch.Util;
+using static System.Net.WebRequestMethods;
 
 namespace Winch.Core
 {
@@ -17,7 +19,8 @@ namespace Winch.Core
 
             InitializeVersionLabel();
 
-            CheckForUpdate();
+            if (WinchConfig.GetProperty("CheckForUpdates", true))
+                CheckForUpdate();
 
             if(WinchConfig.GetProperty("EnableDeveloperConsole", false))
                 InitializeDevConsole();
@@ -29,7 +32,7 @@ namespace Winch.Core
         {
             GameObject assetLoader = new GameObject();
             assetLoader.AddComponent<AssetLoaderObject>();
-            Object.DontDestroyOnLoad(assetLoader);
+            GameObject.DontDestroyOnLoad(assetLoader);
         }
 
         private static void InitializeVersionLabel()
@@ -52,20 +55,25 @@ namespace Winch.Core
             UnityEngine.Object.DontDestroyOnLoad(term);
         }
 
+        private static readonly HttpClient client = new HttpClient();
         private static async void CheckForUpdate()
         {
-            var client = new GitHubClient(new ProductHeaderValue("WinchFetchLatest"));
-            var releases = await client.Repository.Release.GetAll("Hacktix", "Winch");
-            var latest = releases[0];
+            string latestPath = "https://github.com/Hacktix/Winch/releases/latest";
+            string content = await client.GetStringAsync(latestPath);
+
+            Regex titleRegex = new Regex("(?<=<title>)(.*)(?= · Hacktix)");
+            Match match = titleRegex.Match(content);
+
+            string latest = match.Value.Split(' ')[2];
 
             string updateAvailableString;
-            if (VersionUtil.IsSameOrNewer(VersionUtil.GetVersion(), latest.TagName))
+            if (VersionUtil.IsSameOrNewer(VersionUtil.GetVersion(), latest))
             {
                 updateAvailableString = $"Latest version installed.";
             }
             else
             {
-                updateAvailableString = $"Update {latest.TagName} available.";
+                updateAvailableString = $"Update {latest} available.";
             }
 
             GameManager.Instance.BuildInfo.BuildNumber += $"\n{updateAvailableString}";
