@@ -9,6 +9,7 @@ namespace Winch.Core
         {
             AssetLoader.LoadAssets();
             DredgeEvent.TriggerModAssetsLoaded();
+            ModAssemblyLoader.ExecuteModAssemblies();
         }
     }
 }

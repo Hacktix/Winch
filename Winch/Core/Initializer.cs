@@ -14,8 +14,6 @@ namespace Winch.Core
 
             InitializeAssetLoader();
 
-            InitializeVersionLabel();
-
             if(WinchConfig.GetProperty("EnableDeveloperConsole", false))
                 InitializeDevConsole();
 
@@ -29,7 +27,7 @@ namespace Winch.Core
             Object.DontDestroyOnLoad(assetLoader);
         }
 
-        private static void InitializeVersionLabel()
+        internal static void InitializeVersionLabel()
         {
             WinchCore.Log.Debug("Initializing Version Label...");
 
