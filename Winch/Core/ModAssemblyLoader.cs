@@ -21,7 +21,6 @@ namespace Winch.Core
             WinchCore.Log.Info($"Loading {modDirs.Length} mod assemblies...");
             foreach (string modDir in modDirs)
                 RegisterModAssembly(modDir);
-            ExecuteModAssemblies();
         }
 
         private static void RegisterModAssembly(string path)
@@ -41,7 +40,7 @@ namespace Winch.Core
             }
         }
 
-        private static void ExecuteModAssemblies()
+        internal static void ExecuteModAssemblies()
         {
             foreach (string modName in RegisteredAssemblies.Keys)
                 ExecuteModAssembly(modName);

@@ -11,21 +11,24 @@ namespace Winch.Core
 {
     class Initializer
     {
-        public static void Initialize()
+        internal static void Initialize()
         {
             WinchCore.Log.Debug("Initializer started.");
 
             InitializeAssetLoader();
 
-            InitializeVersionLabel();
-
-            if (WinchConfig.GetProperty("CheckForUpdates", true))
-                CheckForUpdate();
-
             if(WinchConfig.GetProperty("EnableDeveloperConsole", false))
                 InitializeDevConsole();
 
             DredgeEvent.TriggerManagersLoaded();
+        }
+
+        internal static void InitializePostUnityLoad()
+        {
+            InitializeVersionLabel();
+
+            if (WinchConfig.GetProperty("CheckForUpdates", true))
+                CheckForUpdate();
         }
 
         private static void InitializeAssetLoader()
@@ -35,7 +38,7 @@ namespace Winch.Core
             GameObject.DontDestroyOnLoad(assetLoader);
         }
 
-        private static void InitializeVersionLabel()
+        internal static void InitializeVersionLabel()
         {
             WinchCore.Log.Debug("Initializing Version Label...");
 
