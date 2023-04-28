@@ -70,13 +70,13 @@ namespace Winch.Core
             string latest = match.Value.Split(' ')[2];
 
             string updateAvailableString;
-            if (VersionUtil.IsSameOrNewer(VersionUtil.GetVersion(), latest))
+            if (VersionUtil.IsSameOrNewer(VersionUtil.GetComparableVersion(), latest))
             {
-                updateAvailableString = $"Latest version installed.";
+                updateAvailableString = $"Latest version installed";
             }
             else
             {
-                updateAvailableString = $"Update {latest} available.";
+                updateAvailableString = $"Update {latest} available";
             }
 
             GameManager.Instance.BuildInfo.BuildNumber += $"\n{updateAvailableString}";
