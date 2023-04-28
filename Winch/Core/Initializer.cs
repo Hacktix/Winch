@@ -70,7 +70,7 @@ namespace Winch.Core
             string latest = match.Value.Split(' ')[2];
 
             string updateAvailableString;
-            if (VersionUtil.IsSameOrNewer(VersionUtil.GetVersion(), latest))
+            if (VersionUtil.IsSameOrNewer(VersionUtil.GetComparableVersion(), latest))
             {
                 updateAvailableString = $"Latest version installed.";
             }
