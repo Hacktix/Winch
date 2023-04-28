@@ -2,7 +2,7 @@
 
 // ReSharper disable HeapView.BoxingAllocation
 
-namespace Winch.Serialization;
+namespace Winch.Serialization.Item;
 
 public class HarvestableItemDataConverter : SpatialItemDataConverter
 {

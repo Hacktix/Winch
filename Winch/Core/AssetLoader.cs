@@ -34,8 +34,10 @@ namespace Winch.Core
         private static void LoadItemFiles(string itemFolderPath)
         {
             string spatialItemsPath = Path.Combine(itemFolderPath, "General");
+            string fishItemsPath = Path.Combine(itemFolderPath, "Fish");
 
             if(Directory.Exists(spatialItemsPath)) LoadItemFilesOfType<SpatialItemData>(spatialItemsPath);
+            if(Directory.Exists(fishItemsPath)) LoadItemFilesOfType<FishItemData>(fishItemsPath);
         }
 
         private static void LoadItemFilesOfType<T>(string itemFolderPath) where T : ItemData

@@ -1,4 +1,6 @@
 ﻿{
   "exampleitems.diamond.name": "Diamond",
-  "exampleitems.diamond.desc": "A strange blue gem with unusual sharp corners. A faint light shines within."
+  "exampleitems.diamond.desc": "A strange blue gem with unusual sharp corners. A faint light shines within.",
+  "exampleitems.mccod.name" : "Raw Cod",
+  "exampleitems.mccod.desc" : "Cod are common bucketable aquatic passive mobs found in oceans and a source of raw cod and occasionally bones or bone meal."
 }
