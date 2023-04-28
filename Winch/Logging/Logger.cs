@@ -6,7 +6,7 @@ namespace Winch.Logging
 {
     enum LogLevel
     {
-        DEBUG = 1, INFO = 2, WARN = 3, ERROR = 4
+        UNITY = 0, DEBUG = 1, INFO = 2, WARN = 3, ERROR = 4
     }
 
     public class Logger
@@ -30,12 +30,17 @@ namespace Winch.Logging
 
         private void Log(LogLevel level, string message)
         {
+            Log(level, message, GetSourceTag());
+        }
+
+        private void Log(LogLevel level, string message, string source)
+        {
             if (!_writeLogs)
                 return;
             if (level < _minLogLevel)
                 return;
 
-            string logMessage = $"[{GetLogTimestamp()}] [{GetSourceTag()}] [{level}] : {message}";
+            string logMessage = $"[{GetLogTimestamp()}] [{source}] [{level}] : {message}";
             _log.Write(logMessage);
             _latestLog.Write(logMessage);
         }
@@ -70,6 +75,7 @@ namespace Winch.Logging
 
 
 
+        internal void Unity(object message, string source) { Log(LogLevel.UNITY, message.ToString(), source); }
         public void Debug(object message) { Log(LogLevel.DEBUG, message.ToString()); }
         public void Info(object message) { Log(LogLevel.INFO, message.ToString()); }
         public void Warn(object message) { Log(LogLevel.WARN, message.ToString()); }
