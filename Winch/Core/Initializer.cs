@@ -72,11 +72,11 @@ namespace Winch.Core
             string updateAvailableString;
             if (VersionUtil.IsSameOrNewer(VersionUtil.GetComparableVersion(), latest))
             {
-                updateAvailableString = $"Latest version installed.";
+                updateAvailableString = $"Latest version installed";
             }
             else
             {
-                updateAvailableString = $"Update {latest} available.";
+                updateAvailableString = $"Update {latest} available";
             }
 
             GameManager.Instance.BuildInfo.BuildNumber += $"\n{updateAvailableString}";
