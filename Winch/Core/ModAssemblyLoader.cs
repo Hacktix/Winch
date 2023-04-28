@@ -44,7 +44,6 @@ namespace Winch.Core
         {
             foreach (string modName in RegisteredAssemblies.Keys)
                 ExecuteModAssembly(modName);
-            Initializer.InitializeVersionLabel();
         }
 
         internal static void ExecuteModAssembly(string modName, string minVersion = null)

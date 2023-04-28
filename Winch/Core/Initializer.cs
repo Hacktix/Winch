@@ -8,7 +8,7 @@ namespace Winch.Core
 {
     class Initializer
     {
-        public static void Initialize()
+        internal static void Initialize()
         {
             WinchCore.Log.Debug("Initializer started.");
 
@@ -18,6 +18,11 @@ namespace Winch.Core
                 InitializeDevConsole();
 
             DredgeEvent.TriggerManagersLoaded();
+        }
+
+        internal static void InitializePostUnityLoad()
+        {
+            InitializeVersionLabel();
         }
 
         private static void InitializeAssetLoader()
