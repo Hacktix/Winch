@@ -1,5 +1,9 @@
 ﻿using HarmonyLib;
 using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text.RegularExpressions;
+using Winch.Config;
 using Winch.Logging;
 using Winch.Util;
 

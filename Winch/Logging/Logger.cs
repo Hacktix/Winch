@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
+using System.Text.RegularExpressions;
 using Winch.Config;
 
 namespace Winch.Logging
@@ -26,6 +29,31 @@ namespace Winch.Logging
             _minLogLevel = (LogLevel)Enum.Parse(typeof(LogLevel), WinchConfig.GetProperty("LogLevel", "DEBUG"));
             _log = new LogFile();
             _latestLog = new LogFile("latest.log");
+
+            CleanupLogs();
+        }
+
+        private static void CleanupLogs()
+        {
+            Regex logFileRegex = new Regex(@"\d{4}-\d{2}-\d{2}-\d{2}_\d{2}\.log");
+            string logBasePath = WinchConfig.GetProperty("LogsFolder", "Logs");
+            string[] allFiles = Directory.GetFiles(logBasePath);
+
+            Array.Sort(allFiles);
+            List<string> logFiles = new List<string>();
+            foreach (string file in allFiles)
+            {
+                string filename = Path.GetFileName(file);
+                if (logFileRegex.IsMatch(filename))
+                    logFiles.Add(file);
+            }
+
+            long targetLogCount = WinchConfig.GetProperty("MaxLogFiles", 10L) - 1;
+            while (logFiles.Count > targetLogCount)
+            {
+                File.Delete(logFiles[0]);
+                logFiles.RemoveAt(0);
+            }
         }
 
         private void Log(LogLevel level, string message)
