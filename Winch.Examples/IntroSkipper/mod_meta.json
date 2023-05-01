@@ -1,6 +1,6 @@
 {
   "Version": "1.0",
   "ModAssembly": "IntroSkipper.dll",
-  "Entrypoint": "IntroSkipper.Loader/Initialize",
-  "MinWinchVersion": "alpha-1.0"
+  "MinWinchVersion": "alpha-1.4",
+  "ApplyPatches": true
 }
