@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using Winch.Util;
 
@@ -33,17 +34,44 @@ namespace Winch.Core
 
         private static void LoadItemFiles(string itemFolderPath)
         {
-            string spatialItemsPath = Path.Combine(itemFolderPath, "General");
-            string fishItemsPath = Path.Combine(itemFolderPath, "Fish");
+            Dictionary<Type, string> _pathData = new Dictionary<Type, string>()
+            {
+                { typeof(NonSpatialItemData), Path.Combine(itemFolderPath, "NonSpatial")},
+                { typeof(SpatialItemData), Path.Combine(itemFolderPath, "General")},
+                { typeof(FishItemData), Path.Combine(itemFolderPath, "Fish")},
+                { typeof(EngineItemData), Path.Combine(itemFolderPath, "Engines")},
+                { typeof(LightItemData), Path.Combine(itemFolderPath, "Lights")},
+                { typeof(RodItemData), Path.Combine(itemFolderPath, "Rods")},
+                { typeof(RelicItemData), Path.Combine(itemFolderPath, "Relics")},
+                { typeof(ResearchableItemData), Path.Combine(itemFolderPath, "Books")},
+                { typeof(MessageItemData), Path.Combine(itemFolderPath, "Messages")},
+                { typeof(DeployableItemData), Path.Combine(itemFolderPath, "Pots")},
+                { typeof(DredgeItemData), Path.Combine(itemFolderPath, "Dredge")},
+                { typeof(DamageItemData), Path.Combine(itemFolderPath, "Damage")},
+            };
 
-            if(Directory.Exists(spatialItemsPath)) LoadItemFilesOfType<SpatialItemData>(spatialItemsPath);
-            if(Directory.Exists(fishItemsPath)) LoadItemFilesOfType<FishItemData>(fishItemsPath);
+            try
+            {
+                foreach (KeyValuePair<Type, string> item in _pathData)
+                {
+                    var baseMethod = typeof(AssetLoader).GetMethod(nameof(AssetLoader.LoadItemFilesOfType));
+                    var genericMethod = baseMethod.MakeGenericMethod(item.Key);
+                    if (Directory.Exists(item.Value))
+                    {
+                        genericMethod.Invoke(null, new object[] { item.Value });
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                WinchCore.Log.Debug(ex);
+            }
         }
 
-        private static void LoadItemFilesOfType<T>(string itemFolderPath) where T : ItemData
+        public static void LoadItemFilesOfType<T>(string itemFolderPath) where T : ItemData
         {
             string[] itemFiles = Directory.GetFiles(itemFolderPath);
-            foreach(string file in itemFiles)
+            foreach (string file in itemFiles)
             {
                 try
                 {
