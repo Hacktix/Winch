@@ -1,0 +1,15 @@
+{
+  "location": {
+    "x": 382.0,
+    "y": 0.0,
+    "z": -354.0
+  },
+  "harvestableParticlePrefab" : "SquidParticles",
+  "items": ["catfish", "cod"],
+  "nightItems" : ["grey-mullet"],
+  "startStock" : 3,
+  "maxStock" : 5,
+  "doesRestock": true,
+  "useTimeSpecificStock": true,
+  "isCurrentlySpecial": false
+}
