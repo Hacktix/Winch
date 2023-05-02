@@ -100,7 +100,7 @@ namespace Winch.Core
             {
                 try
                 {
-                    //PoiUtil.AddPoiFromMeta<T>(file);
+                    // PoiUtil.AddPoiFromMeta<T>(file);
                 }
                 catch(Exception ex)
                 {

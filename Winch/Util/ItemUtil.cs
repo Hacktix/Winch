@@ -1,8 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using UnityEngine;
 using Winch.Core;
 using Winch.Serialization;
 using Winch.Serialization.Item;

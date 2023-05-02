@@ -30,17 +30,14 @@ internal static class PoiUtil
         //{ typeof(ExplosivePOI), new ExplosivePoiConverter() },
         { typeof(CustomHarvestPoi), new CustomHarvestPoiConverter()}
     };
-    
+
     public static List<CustomHarvestPoi> CustomHarvestPois = new();
     public static Dictionary<string, IHarvestable> Harvestables = new();
     public static Dictionary<string, GameObject> HarvestParticlePrefabs = new();
-    
+
     public static void PopulateHarvestablesAndHarvestParticlePrefabs()
     {
-        WinchCore.Log.Debug("Getting all harvestables and harvest particle prefabs");
-        // var baitPOIPrefab = Traverse.Create(banabil2).Field("baitPOIPrefab").GetValue() as GameObject;
         var allHarvestPOIs = Traverse.Create(GameManager.Instance.HarvestPOIManager).Field("allHarvestPOIs").GetValue() as List<HarvestPOI>;
-        WinchCore.Log.Debug($"Got all POIs: {allHarvestPOIs.Count}");
         foreach (var harvestPoi in allHarvestPOIs)
         {
             try
@@ -57,17 +54,9 @@ internal static class PoiUtil
             }
         }
     }
-    
+
     public static GameObject CreateGameObjectFromCustomHarvestPoi(CustomHarvestPoi customHarvestPoi)
     {
-        WinchCore.Log.Debug($"Enumerating properties of customHarvestPoi {customHarvestPoi.id}: {customHarvestPoi}");
-        foreach(var descriptor in typeof(CustomHarvestPoi).GetFields())
-        {
-            string name = descriptor.Name;
-            object value = descriptor.GetValue(customHarvestPoi);
-            WinchCore.Log.Debug($"{name}={value}");
-        }
-        
         GameObject customPoi = new GameObject();
         customPoi.transform.SetParent(GameSceneInitializer.Instance.HarvestPoiContainer.transform);
         customPoi.transform.position = customHarvestPoi.location;
@@ -78,24 +67,24 @@ internal static class PoiUtil
         harvestPoiDataModel.doesRestock = customHarvestPoi.doesRestock;
         harvestPoiDataModel.startStock = customHarvestPoi.startStock;
         harvestPoiDataModel.usesTimeSpecificStock = customHarvestPoi.useTimeSpecificStock;
-        
+
         foreach (var item in customHarvestPoi.items)
         {
             if (ItemUtil.HarvestableItemDataDict.TryGetValue(item, out var value))
                 harvestPoiDataModel.items.Add((HarvestableItemData)value);
         }
-        
+
         foreach (var item in customHarvestPoi.nightItems)
         {
             if (ItemUtil.HarvestableItemDataDict.TryGetValue(item, out var value))
                 harvestPoiDataModel.nightItems.Add((HarvestableItemData)value);
         }
-        
+
         harvestPoiDataModel.id = customHarvestPoi.id;
 
         harvestPoi.HarvestPOIData = harvestPoiDataModel;
         harvestPoi.Harvestable = harvestPoiDataModel;
-        
+
         GameObject harvestParticlePrefab = null;
         if (HarvestParticlePrefabs.TryGetValue(customHarvestPoi.harvestableParticlePrefab, out var prefab))
         {
@@ -104,15 +93,14 @@ internal static class PoiUtil
 
         Traverse.Create(harvestPoi).Field("harvestParticlePrefab").SetValue(harvestParticlePrefab);
 
-
         // Default Harvest POI Sphere Collider
         var sphereCollider = customPoi.AddComponent<SphereCollider>();
         sphereCollider.radius = 2;
         sphereCollider.enabled = true;
         sphereCollider.contactOffset = 0.01f;
-        
+
         Traverse.Create(harvestPoi).Field("poiCollider").SetValue(sphereCollider);
-        
+
         // This needs to be added to the GameManager.Instance.CullingBrain
         var cullable = customPoi.AddComponent<Cullable>();
         GameManager.Instance.CullingBrain.AddCullable(cullable);
@@ -126,11 +114,11 @@ internal static class PoiUtil
         customPoi.layer = LayerMask.NameToLayer("POI");
         return customPoi;
     }
-    
+
     internal static void AddCustomHarvestPoiFromMetadata(string metaPath)
     {
         var meta = UtilHelpers.ParseMeta(metaPath);
-        
+
         if (meta == null)
         {
             WinchCore.Log.Error($"Meta file {metaPath} is empty");
@@ -140,15 +128,9 @@ internal static class PoiUtil
         meta["id"] = Path.GetFileNameWithoutExtension(metaPath);
         CustomHarvestPoi item = new();
 
-        foreach (var kvp in meta)
-        {
-            WinchCore.Log.Debug($"{kvp.Key} = {kvp.Value}");
-        }
-
         if (UtilHelpers.PopulateObjectFromMeta(item, meta, Converters))
         {
-            WinchCore.Log.Debug($"Adding custom harvest poi {item.id}");
-           CustomHarvestPois.Add(item);
+            CustomHarvestPois.Add(item);
         }
         else
         {
