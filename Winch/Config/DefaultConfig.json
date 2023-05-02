@@ -3,5 +3,6 @@
 	"LogLevel": "DEBUG",
 	"LogsFolder": "Logs",
 	"DetailedLogSources": false,
-	"EnableDeveloperConsole": true
+	"EnableDeveloperConsole": true,
+	"MaxLogFiles": 10
 }
