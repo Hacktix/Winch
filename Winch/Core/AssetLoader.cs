@@ -50,21 +50,14 @@ namespace Winch.Core
                 { typeof(DamageItemData), Path.Combine(itemFolderPath, "Damage")},
             };
 
-            try
+            foreach (KeyValuePair<Type, string> item in _pathData)
             {
-                foreach (KeyValuePair<Type, string> item in _pathData)
+                var baseMethod = typeof(AssetLoader).GetMethod(nameof(AssetLoader.LoadItemFilesOfType));
+                var genericMethod = baseMethod.MakeGenericMethod(item.Key);
+                if (Directory.Exists(item.Value))
                 {
-                    var baseMethod = typeof(AssetLoader).GetMethod(nameof(AssetLoader.LoadItemFilesOfType));
-                    var genericMethod = baseMethod.MakeGenericMethod(item.Key);
-                    if (Directory.Exists(item.Value))
-                    {
-                        genericMethod.Invoke(null, new object[] { item.Value });
-                    }
+                    genericMethod.Invoke(null, new object[] { item.Value });
                 }
-            }
-            catch (Exception ex)
-            {
-                WinchCore.Log.Debug(ex);
             }
         }
 
