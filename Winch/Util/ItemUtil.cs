@@ -17,6 +17,20 @@ internal static class ItemUtil
         { typeof(SpatialItemData), new SpatialItemDataConverter() },
     };
 
+    public static Dictionary<string, ItemData> HarvestableItemDataDict = new();
+
+    public static void PopulateItemData()
+    {
+        foreach (var item in GameManager.Instance.ItemManager.allItems)
+        {
+            if (item is FishItemData or RelicItemData or HarvestableItemData)
+            {
+                HarvestableItemDataDict.Add(item.id, item);
+            }
+            WinchCore.Log.Debug($"Added item {item.id} to HarvestableItemDataDict");
+        }
+    }
+
     internal static void AddItemFromMeta<T>(string metaPath) where T : ItemData
     {
         var meta = UtilHelpers.ParseMeta(metaPath);
