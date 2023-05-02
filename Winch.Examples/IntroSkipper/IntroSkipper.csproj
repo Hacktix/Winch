@@ -1,10 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net48</TargetFramework>
-	  <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-	  <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net48</TargetFramework>
+		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+		<AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+		<CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
+	</PropertyGroup>
 
 	<PropertyGroup>
 		<DebugType>none</DebugType>
@@ -14,26 +15,20 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\Winch\Winch.csproj">
-	    <Private>False</Private>
-	    <CopyLocalSatelliteAssemblies>False</CopyLocalSatelliteAssemblies>
-	  </ProjectReference>
+		<ProjectReference Include="..\..\Winch\Winch.csproj">
+			<Private>False</Private>
+			<CopyLocalSatelliteAssemblies>False</CopyLocalSatelliteAssemblies>
+		</ProjectReference>
 	</ItemGroup>
 
 	<ItemGroup>
-		<Reference Include="Assembly-CSharp.dll" HintPath="$(DredgePath)/DREDGE_Data/Managed/Assembly-CSharp.dll" Private="False" />
-		<Reference Include="Assembly-CSharp-firstpass.dll" HintPath="$(DredgePath)/DREDGE_Data/Managed/Assembly-CSharp-firstpass.dll" Private="False" />
+		<PackageReference Include="DredgeGameLibs" Version="1.0.4.1" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<Reference Include="UnityEngine.dll" HintPath="$(DredgePath)/DREDGE_Data/Managed/UnityEngine.dll" Private="False" />
-		<Reference Include="UnityEngine.CoreModule.dll" HintPath="$(DredgePath)/DREDGE_Data/Managed/UnityEngine.CoreModule.dll" Private="False" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <None Update="mod_meta.json">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </None>
+		<None Update="mod_meta.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
 	</ItemGroup>
 
 </Project>
