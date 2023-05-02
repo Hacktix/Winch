@@ -23,6 +23,7 @@
 	<ItemGroup>
 		<Reference Include="Assembly-CSharp.dll" HintPath="$(DredgePath)/DREDGE_Data/Managed/Assembly-CSharp.dll" Private="False" />
 		<Reference Include="Assembly-CSharp-firstpass.dll" HintPath="$(DredgePath)/DREDGE_Data/Managed/Assembly-CSharp-firstpass.dll" Private="False" />
+		<Reference Include="UnityEngine.PhysicsModule" HintPath="$(DredgePath)/DREDGE_Data\Managed\UnityEngine.PhysicsModule.dll" Private="False"/>
 	</ItemGroup>
 
 	<ItemGroup>
