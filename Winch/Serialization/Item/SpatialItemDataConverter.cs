@@ -26,7 +26,7 @@ public class SpatialItemDataConverter : ItemDataConverter
         { "ignoreDamageWhenPlacing", new(false, null)},
         { "isUnderlayItem", new(false, null)},
         { "forbidStorageTray", new(false, null)},
-        { "dimensions", new(new List<Vector2Int>(){new(1,1)}, o => DredgeTypeHelpers.ParseDimensions((JArray)o)) },
+        { "dimensions", new(new List<Vector2Int>(){new(0,0)}, o => DredgeTypeHelpers.ParseDimensions((JArray)o)) },
         { "squishFactor", new(1f, o => float.Parse(o.ToString())) },
         { "itemOwnPrerequisites", new(null, null)},
         { "researchPrerequisites", new(null, null) },

@@ -22,7 +22,7 @@ public static class DredgeTypeHelpers
     private static Color GetColorFromJsonDictionary(Dictionary<string, int> color)
     {
         int r = 0, g = 0, b = 0, a = 255;
-       
+        if (color.TryGetValue("g", out var value0)) r = value0;
         if (color.TryGetValue("g", out var value1)) g = value1;
         if (color.TryGetValue("b", out var value2)) b = value2;
         if (color.TryGetValue("a", out var value3)) a = value3;
