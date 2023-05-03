@@ -18,7 +18,8 @@ namespace Winch.Logging
 
         public LogFile(string filename)
         {
-            string logBasePath = WinchConfig.GetProperty("LogsFolder", "Logs");
+            string logBasePath = WinchConfig.GetProperty("LogsFolder", "Logs") ??
+                                 throw new InvalidOperationException("Could not get logs folder property from config.");
             string logPath = Path.Combine(logBasePath, filename);
 
             if(!Directory.Exists(logBasePath))

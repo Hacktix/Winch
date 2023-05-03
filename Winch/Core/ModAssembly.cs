@@ -13,7 +13,7 @@ namespace Winch.Core
     {
         public readonly string BasePath;
         public Dictionary<string, object> Metadata;
-        public Assembly LoadedAssembly;
+        public Assembly? LoadedAssembly;
 
         private ModAssembly(string basePath) {
             BasePath = basePath;
@@ -23,7 +23,7 @@ namespace Winch.Core
                 throw new FileNotFoundException("Missing mod_meta.json file.");
 
             string metaText = File.ReadAllText(metaPath);
-            Metadata = JsonConvert.DeserializeObject<Dictionary<string, object>>(metaText);
+            Metadata = JsonConvert.DeserializeObject<Dictionary<string, object>>(metaText) ?? throw new InvalidOperationException("Unable to parse mod_meta.json file.");
         }
 
         internal static ModAssembly FromPath(string path)
@@ -31,8 +31,7 @@ namespace Winch.Core
             return new ModAssembly(path);
         }
 
-
-
+        
         internal void LoadAssembly()
         {
             if (!Metadata.ContainsKey("ModAssembly"))
@@ -88,12 +87,12 @@ namespace Winch.Core
 
         private void ProcessDependencies()
         {
-            string[] deps = ((JArray)Metadata["Dependencies"]).ToObject<string[]>();
+            string[] deps = ((JArray)Metadata["Dependencies"]).ToObject<string[]>() ?? Array.Empty<string>();
             foreach (string dep in deps)
             {
                 WinchCore.Log.Debug($"Processing dependency {dep}");
                 string depName = dep.Contains("@") ? dep.Split('@')[0] : dep;
-                string depVersion = dep.Contains("@") ? dep.Split('@')[1] : null;
+                string? depVersion = dep.Contains("@") ? dep.Split('@')[1] : null;
                 ModAssemblyLoader.ExecuteModAssembly(depName, depVersion);
             }
         }
@@ -114,13 +113,10 @@ namespace Winch.Core
             string entrypointTypeName = entrypointSetting.Split('/')[0];
             string entrypointMethodName = entrypointSetting.Split('/')[1];
 
-            Type entrypointType = LoadedAssembly.GetType(entrypointTypeName);
-            if (entrypointType == null)
-                throw new EntryPointNotFoundException($"Could not find type {entrypointTypeName} in Mod Assembly");
-
-            MethodInfo entrypoint = entrypointType.GetMethod(entrypointMethodName);
-            if (entrypoint == null)
-                throw new EntryPointNotFoundException($"Could not find method {entrypointTypeName} in type {entrypointTypeName} in Mod Assembly");
+            Type entrypointType = LoadedAssembly?.GetType(entrypointTypeName) ?? 
+                                  throw new EntryPointNotFoundException($"Could not find type {entrypointTypeName} in Mod Assembly");
+            MethodInfo entrypoint = entrypointType.GetMethod(entrypointMethodName) ?? 
+                                    throw new EntryPointNotFoundException($"Could not find method {entrypointTypeName} in type {entrypointTypeName} in Mod Assembly");
 
             WinchCore.Log.Debug($"Invoking entrypoint {entrypointType}.{entrypointMethodName}...");
             entrypoint.Invoke(null, new object[0]);

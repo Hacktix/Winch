@@ -1,8 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using UnityEngine;
 using Winch.Core;
 using Winch.Serialization;
 using Winch.Serialization.Item;
@@ -26,6 +24,20 @@ internal static class ItemUtil
         { typeof(LightItemData), new LightItemDataConverter() },
         { typeof(DamageItemData), new DamageItemDataConverter() },
     };
+
+    public static Dictionary<string, ItemData> HarvestableItemDataDict = new();
+
+    public static void PopulateItemData()
+    {
+        foreach (var item in GameManager.Instance.ItemManager.allItems)
+        {
+            if (item is FishItemData or RelicItemData or HarvestableItemData)
+            {
+                HarvestableItemDataDict.Add(item.id, item);
+            }
+            WinchCore.Log.Debug($"Added item {item.id} to HarvestableItemDataDict");
+        }
+    }
 
     internal static void AddItemFromMeta<T>(string metaPath) where T : ItemData
     {

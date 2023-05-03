@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using UnityEngine;
 using Winch.Core;
 using Winch.Serialization;
+// ReSharper disable HeapView.PossibleBoxingAllocation
 
 namespace Winch.Util;
 
@@ -35,6 +36,7 @@ public static class UtilHelpers
 
     public static bool PopulateObjectFromMeta<T>(T item, Dictionary<string, object> meta, Dictionary<Type, IDredgeTypeConverter> converters)
     {
+        if (item == null) throw new ArgumentNullException($"{nameof(item)} is null");
         var itemType = typeof(T);
         if (converters.TryGetValue(itemType, out var converter))
         {

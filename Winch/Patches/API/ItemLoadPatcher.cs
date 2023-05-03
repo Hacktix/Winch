@@ -6,7 +6,7 @@ using Winch.Core.API;
 namespace Winch.Patches.API
 {
     [HarmonyPatch(typeof(ItemManager))]
-    [HarmonyPatch("OnItemDataAddressablesLoaded")]
+    [HarmonyPatch(nameof(ItemManager.OnItemDataAddressablesLoaded))]
     class ItemLoadPatcher
     {
         public static void Prefix(ItemManager __instance, AsyncOperationHandle<IList<ItemData>> handle)
