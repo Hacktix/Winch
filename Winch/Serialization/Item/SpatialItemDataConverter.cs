@@ -11,27 +11,27 @@ public class SpatialItemDataConverter : ItemDataConverter
 {
     private readonly Dictionary<string, FieldDefinition> _definitions = new()
     {
-        { "canBeSoldByPlayer", new(true, null)},
-        { "canBeSoldInBulkAction", new(true, null)},
+        { "canBeSoldByPlayer", new(true, o => bool.Parse(o.ToString())) },
+        { "canBeSoldInBulkAction", new(true, o => bool.Parse(o.ToString())) },
         { "value", new(decimal.Zero, o => decimal.Parse(o.ToString())) },
-        { "hasSellOverride", new(false, null)},
-        { "sellOverrideValue", new(decimal.Zero, o => decimal.Parse(o.ToString()))},
+        { "hasSellOverride", new(false, o => bool.Parse(o.ToString())) },
+        { "sellOverrideValue", new(decimal.Zero, o => decimal.Parse(o.ToString())) },
         { "sprite", new(null, o => TextureUtil.GetSprite(o.ToString())) },
         { "platformSpecificSpriteOverrides", new(null, null) },
-        { "itemColor", new(new Color(65f, 65f, 65f, 255f), o=> DredgeTypeHelpers.GetColorFromJsonObject(o))},
-        { "canBeDiscardedByPlayer", new(true, null)},
-        { "canBeDiscardedDuringQuestPickup", new(true, null)},
-        { "damageMode", new(DamageMode.NONE, o=> DredgeTypeHelpers.GetEnumValue<DamageMode>(o))},
-        { "moveMode", new(MoveMode.FREE, o=> DredgeTypeHelpers.GetEnumValue<MoveMode>(o))},
-        { "ignoreDamageWhenPlacing", new(false, null)},
-        { "isUnderlayItem", new(false, null)},
-        { "forbidStorageTray", new(false, null)},
-        { "dimensions", new(new List<Vector2Int>(){new Vector2Int(1,1)}, o => DredgeTypeHelpers.ParseDimensions((JArray)o)) },
+        { "itemColor", new(new Color(0.1922f, 0.1922f, 0.1922f, 255), o=> DredgeTypeHelpers.GetColorFromJsonObject(o)) }, // default game uses
+        { "canBeDiscardedByPlayer", new(true, o => bool.Parse(o.ToString())) },
+        { "canBeDiscardedDuringQuestPickup", new(true, o => bool.Parse(o.ToString())) },
+        { "damageMode", new(DamageMode.NONE, o=> DredgeTypeHelpers.GetEnumValue<DamageMode>(o)) },
+        { "moveMode", new(MoveMode.FREE, o=> DredgeTypeHelpers.GetEnumValue<MoveMode>(o)) },
+        { "ignoreDamageWhenPlacing", new(false, o => bool.Parse(o.ToString())) },
+        { "isUnderlayItem", new(false, null) },
+        { "forbidStorageTray", new(false, null) },
+        { "dimensions", new(new List<Vector2Int>(){ new Vector2Int(0,0) }, o => DredgeTypeHelpers.ParseDimensions((JArray)o)) },
         { "squishFactor", new(1f, o => float.Parse(o.ToString())) },
-        { "itemOwnPrerequisites", new(null, null)},
+        { "itemOwnPrerequisites", new(null, null) },
         { "researchPrerequisites", new(null, null) },
         { "researchPointsRequired", new(0, o => int.Parse(o.ToString())) },
-        { "buyableWithoutResearch", new(true, null) },
+        { "buyableWithoutResearch", new(true, o => bool.Parse(o.ToString())) }
     };
 
     public SpatialItemDataConverter()

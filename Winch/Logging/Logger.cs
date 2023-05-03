@@ -14,11 +14,11 @@ namespace Winch.Logging
 
     public class Logger
     {
-        private LogFile _log;
-        private LogFile _latestLog;
+        private LogFile? _log;
+        private LogFile? _latestLog;
 
         private bool _writeLogs;
-        private LogLevel _minLogLevel;
+        private LogLevel? _minLogLevel;
 
         public Logger()
         {
@@ -67,10 +67,10 @@ namespace Winch.Logging
                 return;
             if (level < _minLogLevel)
                 return;
-
+            
             string logMessage = $"[{GetLogTimestamp()}] [{source}] [{level}] : {message}";
-            _log.Write(logMessage);
-            _latestLog.Write(logMessage);
+            _log?.Write(logMessage);
+            _latestLog?.Write(logMessage);
         }
 
         private string GetLogTimestamp()
@@ -81,10 +81,10 @@ namespace Winch.Logging
 
         private string GetSourceTag()
         {
-            StackFrame[] frames = new StackTrace().GetFrames();
-            string callingClass = "";
-            string callingMethod = "";
-            string callingAssembly = "";
+            StackFrame[] frames = new StackTrace().GetFrames() ?? throw new InvalidOperationException("No stack trace available.");
+            string? callingClass = "";
+            string? callingMethod = "";
+            string? callingAssembly = "";
             for(int i = 1; i < frames?.Length; i++)
             {
                 callingMethod = frames[i].GetMethod().Name;
