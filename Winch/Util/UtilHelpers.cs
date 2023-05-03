@@ -47,7 +47,6 @@ public static class UtilHelpers
             WinchCore.Log.Error($"No converter found for type {itemType}");
             return false;
         }
-
         return true;
     }
 }

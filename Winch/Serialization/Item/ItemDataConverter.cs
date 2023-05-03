@@ -4,13 +4,11 @@ using UnityEngine;
 using UnityEngine.Localization;
 using Winch.Util;
 
-// ReSharper disable HeapView.BoxingAllocation
-
 namespace Winch.Serialization.Item;
 
 public class ItemDataConverter : DredgeTypeConverter<ItemData>
 {
-    private const string ItemTableDefinition = "Items";
+    internal const string ItemTableDefinition = "Items";
 
     private readonly Dictionary<string, FieldDefinition> _definitions = new()
     {
@@ -25,9 +23,9 @@ public class ItemDataConverter : DredgeTypeConverter<ItemData>
         { "tooltipNotesColor", new(Color.white, o => DredgeTypeHelpers.GetColorFromJsonObject(o)) },
         { "itemTypeIcon", new(null, o => TextureUtil.GetSprite(o.ToString())) },
         { "harvestParticlePrefab", new(null, null) },
-        { "overrideHarvestParticleDepth", new(false, null) },
+        { "overrideHarvestParticleDepth", new(false, o=> bool.Parse(o.ToString())) },
         { "harvestParticleDepthOffset", new(-3f, o=> float.Parse(o.ToString())) },
-        { "flattenParticleShape", new(false, null) },
+        { "flattenParticleShape", new(false, o=> bool.Parse(o.ToString())) },
         { "availableInDemo", new(false, null) },
     };
 
@@ -42,7 +40,7 @@ public class ItemDataConverter : DredgeTypeConverter<ItemData>
         AddReroutes(_reroutes);
     }
 
-    private static LocalizedString CreateLocalizedString(string key, string value)
+    internal static LocalizedString CreateLocalizedString(string key, string value)
     {
         var keyValueTuple = (key, value);
         if (StringDefinitionCache.TryGetValue(keyValueTuple, out LocalizedString cached))

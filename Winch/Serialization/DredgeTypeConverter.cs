@@ -80,7 +80,17 @@ public class DredgeTypeConverter<T> : IDredgeTypeConverter
     {
         foreach (var fieldDefinitionEntry in definitions)
         {
-            this.FieldDefinitions.Add(fieldDefinitionEntry.Key, fieldDefinitionEntry.Value);
+            if (FieldDefinitions.ContainsKey(fieldDefinitionEntry.Key))
+            {
+                this.FieldDefinitions[fieldDefinitionEntry.Key] = new(
+                    fieldDefinitionEntry.Value.DefaultValue,
+                    FieldDefinitions[fieldDefinitionEntry.Key].Parser
+                    );
+            }
+            else
+            {
+                this.FieldDefinitions.Add(fieldDefinitionEntry.Key, fieldDefinitionEntry.Value);
+            }
         }
     }
     
