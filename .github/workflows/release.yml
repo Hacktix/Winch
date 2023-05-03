@@ -39,16 +39,16 @@ jobs:
           uses: "actions/upload-artifact@v3"
           with:
             name: "${{ env.DISASTER_BUTTON }}"
-            path: "${{ env.DISASTER_BUTTON }}/bin"
+            path: "Winch.Examples/${{ env.DISASTER_BUTTON }}/bin"
 
         - name: Upload Artifact
           uses: "actions/upload-artifact@v3"
           with:
             name: "${{ env.EXAMPLE_ITEMS }}"
-            path: "${{ env.EXAMPLE_ITEMS }}/bin"
+            path: "Winch.Examples/${{ env.EXAMPLE_ITEMS }}/bin"
             
         - name: Upload Artifact
           uses: "actions/upload-artifact@v3"
           with:
             name: "${{ env.INTRO_SKIPPER }}"
-            path: "${{ env.INTRO_SKIPPER }}/bin"
+            path: "Winch.Examples/${{ env.INTRO_SKIPPER }}/bin"
