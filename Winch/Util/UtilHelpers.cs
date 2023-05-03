@@ -23,21 +23,30 @@ public static class UtilHelpers
         {
             WinchCore.Log.Error($"Unable to read meta file {metaPath}: {ex.Message}");
         }
-        
+
         return null;
+    }
+
+    public static ScriptableObject GetScriptableObjectFromMeta(Type scriptableObjectType, Dictionary<string, object> meta, string metaPath)
+    {
+        if (!scriptableObjectType.IsSubclassOf(typeof(ScriptableObject)))
+            throw new ArgumentException($"Type {nameof(scriptableObjectType)} must be a subclass of {nameof(ScriptableObject)}");
+
+        meta["id"] = Path.GetFileNameWithoutExtension(metaPath);
+        ScriptableObject item = ScriptableObject.CreateInstance(scriptableObjectType);
+        return item;
     }
 
     public static T GetScriptableObjectFromMeta<T>(Dictionary<string, object> meta, string metaPath) where T : ScriptableObject
     {
-        meta["id"] = Path.GetFileNameWithoutExtension(metaPath);
-        T item = ScriptableObject.CreateInstance<T>();
-        return item;
+        return GetScriptableObjectFromMeta(typeof(T), meta, metaPath) as T;
     }
 
-    public static bool PopulateObjectFromMeta<T>(T item, Dictionary<string, object> meta, Dictionary<Type, IDredgeTypeConverter> converters)
+    public static bool PopulateObjectFromMeta(Type itemType, object item, Dictionary<string, object> meta,
+        Dictionary<Type, IDredgeTypeConverter> converters)
     {
         if (item == null) throw new ArgumentNullException($"{nameof(item)} is null");
-        var itemType = typeof(T);
+
         if (converters.TryGetValue(itemType, out var converter))
         {
             converter.PopulateFields(item, meta);
@@ -48,5 +57,10 @@ public static class UtilHelpers
             return false;
         }
         return true;
+    }
+
+    public static bool PopulateObjectFromMeta<T>(T item, Dictionary<string, object> meta, Dictionary<Type, IDredgeTypeConverter> converters)
+    {
+        return PopulateObjectFromMeta(typeof(T), item, meta, converters);
     }
 }

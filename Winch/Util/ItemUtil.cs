@@ -1,6 +1,8 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using UnityEngine;
 using Winch.Core;
 using Winch.Serialization;
 using Winch.Serialization.Item;
@@ -39,16 +41,29 @@ internal static class ItemUtil
         }
     }
 
-    internal static void AddItemFromMeta<T>(string metaPath) where T : ItemData
+    internal static void AddItemFromMeta(Type itemType, string metaPath)
     {
+        if (!itemType.IsSubclassOf(typeof(ItemData)))
+            throw new ArgumentException($"Type {nameof(itemType)} must be a subclass of {nameof(ItemData)}");
+
         var meta = UtilHelpers.ParseMeta(metaPath);
         if (meta == null)
         {
             WinchCore.Log.Error($"Meta file {metaPath} is empty");
             return;
         }
-        var item = UtilHelpers.GetScriptableObjectFromMeta<T>(meta, metaPath);
-        if (UtilHelpers.PopulateObjectFromMeta<T>(item, meta, Converters))
+
+        meta["id"] = Path.GetFileNameWithoutExtension(metaPath);
+        var item = ScriptableObject.CreateInstance(itemType) as ItemData ?? throw new NullReferenceException($"Unable to create instance of {itemType}");
+
+        if (UtilHelpers.PopulateObjectFromMeta(itemType, item, meta, Converters))
+        {
+            WinchCore.Log.Debug($"Added item {item.id} from meta {metaPath}");
             GameManager.Instance.ItemManager.allItems.Add(item);
+        }
+    }
+    internal static void AddItemFromMeta<T>(string metaPath) where T : ItemData
+    {
+       AddItemFromMeta(typeof(T), metaPath);
     }
 }

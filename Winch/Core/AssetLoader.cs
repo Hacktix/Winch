@@ -64,14 +64,24 @@ namespace Winch.Core
                 { typeof(DamageItemData), Path.Combine(itemFolderPath, "Damage")},
             };
 
+            WinchCore.Log.Debug($"Loading Items from {itemFolderPath}");
+
             foreach (KeyValuePair<Type, string> item in _pathData)
             {
-                var baseMethod = typeof(AssetLoader).GetMethod(nameof(AssetLoader.LoadItemFilesOfType));
-                var genericMethod = baseMethod.MakeGenericMethod(item.Key);
-                if (Directory.Exists(item.Value))
+                try
                 {
-                    genericMethod.Invoke(null, new object[] { item.Value });
+                    if (Directory.Exists(item.Value))
+                    {
+                        WinchCore.Log.Debug($"Adding Items from {item.Value}");
+                        LoadItemFilesOfType(item.Key, item.Value);
+                        WinchCore.Log.Debug($"Added Items from {item.Value}");
+                    }
                 }
+                catch (Exception ex)
+                {
+                    WinchCore.Log.Error($"Ran into an error while loading items from {item.Value}: {ex}");
+                }
+
             }
         }
 
@@ -114,8 +124,11 @@ namespace Winch.Core
             }
         }
 
-        private static void LoadPoiFilesOfType<T>(string poiFolderPath) where T : POI
+        private static void LoadPoiFilesOfType(Type type, string poiFolderPath)
         {
+            if (!type.IsSubclassOf(typeof(POI)))
+                throw new ArgumentException($"Type {nameof(type)} must be a subclass of POI");
+
             string[] poiFiles = Directory.GetFiles(poiFolderPath);
             foreach(string file in poiFiles)
             {
@@ -130,20 +143,34 @@ namespace Winch.Core
             }
         }
 
-        private static void LoadItemFilesOfType<T>(string itemFolderPath) where T : ItemData
+        private static void LoadPoiFilesOfType<T>(string poiFolderPath) where T : POI
         {
+            LoadPoiFilesOfType(typeof(T), poiFolderPath);
+        }
+
+        private static void LoadItemFilesOfType(Type itemType, string itemFolderPath)
+        {
+            if (!itemType.IsSubclassOf(typeof(ItemData)))
+                throw new ArgumentException($"Type {nameof(itemType)} must be a subclass of {nameof(ItemData)}");
+
             string[] itemFiles = Directory.GetFiles(itemFolderPath);
             foreach (string file in itemFiles)
             {
                 try
                 {
-                    ItemUtil.AddItemFromMeta<T>(file);
+                    WinchCore.Log.Debug($"Adding Item of type {itemType} from {file}");
+                    ItemUtil.AddItemFromMeta(itemType, file);
                 }
                 catch(Exception ex)
                 {
                     WinchCore.Log.Error($"Failed to load item from {file}: {ex}");
                 }
             }
+        }
+
+        private static void LoadItemFilesOfType<T>(string itemFolderPath) where T : ItemData
+        {
+            LoadItemFilesOfType(typeof(T), itemFolderPath);
         }
 
         private static void LoadLocalizationFiles(string localizationFolderPath)
