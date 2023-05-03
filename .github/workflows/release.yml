@@ -27,7 +27,7 @@ jobs:
           run: dotnet build -c Release
 
         - name: Check
-          run: echo "ls"
+          run: ls
 
         - name: Upload Artifact
           uses: "actions/upload-artifact@v3"
