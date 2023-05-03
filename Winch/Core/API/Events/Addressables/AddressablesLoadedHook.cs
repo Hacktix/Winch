@@ -6,12 +6,12 @@ namespace Winch.Core.API.Events.Addressables
 {
     public class AddressablesLoadedHook<T>
     {
-        public event AddressablesLoadedEventHandler<T> Before;
-        public event AddressablesLoadedEventHandler<T> On;
+        public event AddressablesLoadedEventHandler<T>? Before;
+        public event AddressablesLoadedEventHandler<T>? On;
 
         public void Trigger(object sender, AsyncOperationHandle<IList<T>> handle, bool prefix)
         {
-            WinchCore.Log.Debug($"Triggered {typeof(T)} type event: {handle.Result.Count} elements (Prefix: {prefix})");
+            WinchCore.Log.Debug($"Triggered {typeof(T)} type event: {handle.Result.Count.ToString()} elements (Prefix: {prefix.ToString()})");
             try
             {
                 var args = new AddressablesLoadedEventArgs<T>(handle);

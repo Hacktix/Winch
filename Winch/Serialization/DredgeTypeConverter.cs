@@ -36,7 +36,7 @@ public class DredgeTypeConverter<T> : IDredgeTypeConverter
                 {
                     field.SetValue(obj,
                         FieldDefinitions[field.Name].Parser != null
-                            ? FieldDefinitions[field.Name].Parser(value)
+                            ? FieldDefinitions[field.Name].Parser?.Invoke(value)
                             : value);
                 }
                 else

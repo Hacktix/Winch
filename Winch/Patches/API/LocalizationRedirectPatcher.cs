@@ -13,7 +13,7 @@ namespace Winch.Patches.API
         public static bool Prefix(ref string __result, string key, long keyId, TableReference tableReference, StringTable table, Locale locale)
         {
             string localeCode = locale.Identifier.Code;
-            string localized = LocalizationUtil.GetLocalizedString(localeCode, key);
+            string? localized = LocalizationUtil.GetLocalizedString(localeCode, key);
             if (localized == null)
                 return true;
 

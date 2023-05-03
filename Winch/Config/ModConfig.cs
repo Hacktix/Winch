@@ -38,7 +38,7 @@ namespace Winch.Config
             return Instances[modName];
         }
 
-        public static T GetProperty<T>(string modName, string key, T defaultValue)
+        public static T? GetProperty<T>(string modName, string key, T? defaultValue)
         {
             return GetConfig(modName).GetProperty(key, defaultValue);
         }
