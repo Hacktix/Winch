@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.IO;
 using Winch.Util;
 
@@ -63,15 +64,15 @@ namespace Winch.Core
                 { typeof(DredgeItemData), Path.Combine(itemFolderPath, "Dredge")},
                 { typeof(DamageItemData), Path.Combine(itemFolderPath, "Damage")},
             };
-
             foreach (KeyValuePair<Type, string> item in _pathData)
             {
-                var baseMethod = typeof(AssetLoader).GetMethod(nameof(AssetLoader.LoadItemFilesOfType));
+                var baseMethod = typeof(AssetLoader).GetMethod(nameof(AssetLoader.LoadItemFilesOfType), BindingFlags.NonPublic | BindingFlags.Static);
                 var genericMethod = baseMethod.MakeGenericMethod(item.Key);
                 if (Directory.Exists(item.Value))
                 {
                     genericMethod.Invoke(null, new object[] { item.Value });
                 }
+                
             }
         }
 
