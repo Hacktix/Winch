@@ -1,7 +1,10 @@
 name: Create Release
 
 env:
-    PROJ_NAME: Winch
+    PROJ_NAME: Winch,
+    DISASTER_BUTTON: DisasterButton,
+    EXAMPLE_ITEMS: ExampleItems,
+    INTRO_SKIPPER: IntroSkipper
 
 on:
   push:
@@ -28,3 +31,21 @@ jobs:
           with:
             name: "${{ env.PROJ_NAME }}"
             path: "${{ env.PROJ_NAME }}/bin"
+            
+        - name: Upload Artifact
+          uses: "actions/upload-artifact@v3"
+          with:
+            name: "${{ env.DISASTER_BUTTON }}"
+            path: "${{ env.DISASTER_BUTTON }}/bin"
+
+        - name: Upload Artifact
+          uses: "actions/upload-artifact@v3"
+          with:
+            name: "${{ env.EXAMPLE_ITEMS }}"
+            path: "${{ env.EXAMPLE_ITEMS }}/bin"
+            
+        - name: Upload Artifact
+          uses: "actions/upload-artifact@v3"
+          with:
+            name: "${{ env.INTRO_SKIPPER }}"
+            path: "${{ env.INTRO_SKIPPER }}/bin"
