@@ -20,11 +20,11 @@ jobs:
         - name: Setup .NET
           uses: "actions/setup-dotnet@v3"
 
-        - name: Build Mod
+        - name: Build Winch
           run: dotnet build -c Release
 
         - name: Upload Artifact
           uses: "actions/upload-artifact@v3"
           with:
             name: "${{ env.PROJ_NAME }}"
-            path: "${{ env.PROJ_NAME }}/bin/Release"
+            path: "${{ env.PROJ_NAME }}/bin"
