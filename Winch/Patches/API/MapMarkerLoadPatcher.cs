@@ -6,7 +6,7 @@ using Winch.Core.API;
 namespace Winch.Patches.API
 {
     [HarmonyPatch(typeof(DataLoader))]
-    [HarmonyPatch("OnMapMarkerDataAddressablesLoaded")]
+    [HarmonyPatch(nameof(DataLoader.OnMapMarkerDataAddressablesLoaded))]
     class MapMarkerLoadPatcher
     {
         public static void Prefix(DataLoader __instance, AsyncOperationHandle<IList<MapMarkerData>> handle)

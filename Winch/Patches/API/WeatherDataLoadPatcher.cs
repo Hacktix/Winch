@@ -6,7 +6,7 @@ using Winch.Core.API;
 namespace Winch.Patches.API
 {
     [HarmonyPatch(typeof(DataLoader))]
-    [HarmonyPatch("OnWeatherDataAddressablesLoaded")]
+    [HarmonyPatch(nameof(DataLoader.OnWeatherDataAddressablesLoaded))]
     class WeatherDataLoadPatcher
     {
         public static void Prefix(DataLoader __instance, AsyncOperationHandle<IList<WeatherData>> handle)

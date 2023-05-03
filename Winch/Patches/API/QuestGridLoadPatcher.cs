@@ -6,7 +6,7 @@ using Winch.Core.API;
 namespace Winch.Patches.API
 {
     [HarmonyPatch(typeof(DataLoader))]
-    [HarmonyPatch("OnQuestGridDataAddressablesLoaded")]
+    [HarmonyPatch(nameof(DataLoader.OnQuestGridDataAddressablesLoaded))]
     class QuestGridLoadPatcher
     {
         public static void Prefix(DataLoader __instance, AsyncOperationHandle<IList<QuestGridConfig>> handle)
