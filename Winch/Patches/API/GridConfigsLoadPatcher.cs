@@ -6,7 +6,7 @@ using Winch.Core.API;
 namespace Winch.Patches.API
 {
     [HarmonyPatch(typeof(DataLoader))]
-    [HarmonyPatch("OnGridConfigDataAddressablesLoaded")]
+    [HarmonyPatch(nameof(DataLoader.OnGridConfigDataAddressablesLoaded))]
     class GridConfigsLoadPatcher
     {
         public static void Prefix(DataLoader __instance, AsyncOperationHandle<IList<GridConfiguration>> handle)

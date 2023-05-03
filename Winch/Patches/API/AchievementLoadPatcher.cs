@@ -6,7 +6,7 @@ using Winch.Core.API;
 namespace Winch.Patches.API
 {
     [HarmonyPatch(typeof(AchievementManager))]
-    [HarmonyPatch("OnAchievementDataAddressablesLoaded")]
+    [HarmonyPatch(nameof(AchievementManager.OnAchievementDataAddressablesLoaded))]
     class AchievementLoadPatcher
     {
         public static void Prefix(AchievementManager __instance, AsyncOperationHandle<IList<AchievementData>> handle)

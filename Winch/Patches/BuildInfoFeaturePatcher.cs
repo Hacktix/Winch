@@ -4,7 +4,7 @@ using Winch.Core;
 namespace Winch.Patches
 {
     [HarmonyPatch(typeof(GameManager))]
-    [HarmonyPatch("AddTerminalCommands")]
+    [HarmonyPatch(nameof(GameManager.AddTerminalCommands))]
     class BuildInfoFeaturePatcher
     {
         static bool Prefix() {

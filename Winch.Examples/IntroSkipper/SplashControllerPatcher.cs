@@ -4,7 +4,7 @@ using Winch.Core;
 namespace IntroSkipper
 {
     [HarmonyPatch(typeof(SplashController))]
-    [HarmonyPatch("OnEnable")]
+    [HarmonyPatch(nameof(SplashController.OnEnable))]
     class SplashControllerPatcher
     {
         public static bool Prefix()
