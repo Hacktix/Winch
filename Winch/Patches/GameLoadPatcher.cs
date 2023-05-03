@@ -4,7 +4,7 @@ using Winch.Core;
 namespace Winch.Patches
 {
     [HarmonyPatch(typeof(GameManager))]
-    [HarmonyPatch("WaitForAllAsyncManagers")]
+    [HarmonyPatch(nameof(GameManager.WaitForAllAsyncManagers))]
     class GameLoadPatcher
     {
         static void Postfix()
