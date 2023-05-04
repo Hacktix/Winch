@@ -60,7 +60,7 @@ jobs:
             path: "${{ env.MODS_DIR }}/${{ env.INTRO_SKIPPER }}/bin"
   release:
     name: Draft release
-    if: ${{ env.GITHUB_EVENT_NAME}}
+    if: ${{ vars.GITHUB_EVENT_NAME}}
     runs-on: windows-latest
     needs: build
     steps:
