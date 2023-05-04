@@ -17,6 +17,9 @@ namespace Winch.Core
             if (!Directory.Exists("Mods"))
                 Directory.CreateDirectory("Mods");
 
+            if (!Directory.Exists("Config"))
+                Directory.CreateDirectory("Config");
+
             string[] modDirs = Directory.GetDirectories("Mods");
             WinchCore.Log.Info($"Loading {modDirs.Length} mod assemblies...");
             foreach (string modDir in modDirs)
