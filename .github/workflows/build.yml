@@ -1,7 +1,8 @@
-name: Build artifacts
+name: Build artifacts and draft release
 
 env:
     PROJ_NAME: Winch
+    MODS_DIR: Winch.Examples
     DISASTER_BUTTON: DisasterButton
     EXAMPLE_ITEMS: ExampleItems
     INTRO_SKIPPER: IntroSkipper
@@ -11,6 +12,11 @@ on:
     branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
+  workflow_dispatch:
+    inputs:
+        version:
+            description: Semver
+            type: string
 
 jobs:
   build:
@@ -39,16 +45,41 @@ jobs:
           uses: "actions/upload-artifact@v3"
           with:
             name: "${{ env.DISASTER_BUTTON }}"
-            path: "Winch.Examples/${{ env.DISASTER_BUTTON }}/bin"
+            path: "${{ env.MODS_DIR }}/${{ env.DISASTER_BUTTON }}/bin"
 
         - name: Upload Artifact
           uses: "actions/upload-artifact@v3"
           with:
             name: "${{ env.EXAMPLE_ITEMS }}"
-            path: "Winch.Examples/${{ env.EXAMPLE_ITEMS }}/bin"
+            path: "${{ env.MODS_DIR }}/${{ env.EXAMPLE_ITEMS }}/bin"
             
         - name: Upload Artifact
           uses: "actions/upload-artifact@v3"
           with:
             name: "${{ env.INTRO_SKIPPER }}"
-            path: "Winch.Examples/${{ env.INTRO_SKIPPER }}/bin"
+            path: "${{ env.MODS_DIR }}/${{ env.INTRO_SKIPPER }}/bin"
+  release:
+    name: Draft release
+    if: ${{ env.GITHUB_EVENT_NAME}}
+    runs-on: windows-latest
+    needs: build
+    steps:
+        - name: Zip For Release
+          run: |
+            7z a ${{ env.PROJ_NAME }}.zip ${{ env.PROJ_NAME }}/bin/**
+            7z a ${{ env.DISASTER_BUTTON }}.zip ${{ env.MODS_DIR }}/${{ env.DISASTER_BUTTON }}/bin/**
+            7z a ${{ env.EXAMPLE_ITEMS }}.zip ${{ env.MODS_DIR }}/${{ env.EXAMPLE_ITEMS }}/bin/**
+            7z a ${{ env.INTRO_SKIPPER }}.zip ${{ env.MODS_DIR }}/${{ env.INTRO_SKIPPER }}/bin/**
+
+        - name: Create Release
+          uses: "ncipollo/release-action@v1"
+          with:
+            allowUpdates: true
+            commit: ${{ github.ref_name }}
+            tag: v${{ inputs.version }}
+            name: Version ${{ inputs.version }}
+            omitBodyDuringUpdate: true
+            artifacts: "${{ env.PROJ_NAME }}.zip ${{ env.DISASTER_BUTTON }}.zip ${{ env.EXAMPLE_ITEMS }}.zip ${{ env.INTRO_SKIPPER }}.zip"
+            draft: true
+    
+      
