@@ -1,4 +1,4 @@
-name: Create Release
+name: Build artifacts
 
 env:
     PROJ_NAME: Winch
@@ -14,7 +14,7 @@ on:
 
 jobs:
   build:
-    name: Create Release
+    name: Create nightly
     runs-on: windows-latest
     steps:
         - name: Checkout
@@ -24,7 +24,7 @@ jobs:
           uses: "actions/setup-dotnet@v3"
 
         - name: Build Winch
-          run: dotnet build -c Release
+          run: dotnet build -c Debug
 
         - name: Check
           run: ls
