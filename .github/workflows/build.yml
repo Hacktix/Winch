@@ -15,7 +15,7 @@ on:
   workflow_dispatch:
     inputs:
         version:
-            description: Semver
+            description: New version number
             type: string
 
 jobs:
