@@ -20,7 +20,7 @@ on:
 
 jobs:
   build:
-    name: Create nightly
+    name: Create artifacts
     runs-on: windows-latest
     steps:
         - name: Checkout
@@ -35,32 +35,32 @@ jobs:
         - name: Check
           run: ls
 
-        - name: Upload Artifact
+        - name: Upload Winch Artifact
           uses: "actions/upload-artifact@v3"
           with:
             name: "${{ env.PROJ_NAME }}"
             path: "${{ env.PROJ_NAME }}/bin"
             
-        - name: Upload Artifact
+        - name: Upload DisasterButton Artifact
           uses: "actions/upload-artifact@v3"
           with:
             name: "${{ env.DISASTER_BUTTON }}"
             path: "${{ env.MODS_DIR }}/${{ env.DISASTER_BUTTON }}/bin"
 
-        - name: Upload Artifact
+        - name: Upload ExampleItems Artifact
           uses: "actions/upload-artifact@v3"
           with:
             name: "${{ env.EXAMPLE_ITEMS }}"
             path: "${{ env.MODS_DIR }}/${{ env.EXAMPLE_ITEMS }}/bin"
             
-        - name: Upload Artifact
+        - name: Upload IntroSkipper Artifact
           uses: "actions/upload-artifact@v3"
           with:
             name: "${{ env.INTRO_SKIPPER }}"
             path: "${{ env.MODS_DIR }}/${{ env.INTRO_SKIPPER }}/bin"
   release:
     name: Draft release
-    if: ${{ vars.GITHUB_EVENT_NAME}}
+    if: ${{ vars.GITHUB_EVENT_NAME}} == "workflow_dispatch"
     runs-on: windows-latest
     needs: build
     steps:
