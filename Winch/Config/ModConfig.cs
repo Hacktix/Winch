@@ -26,10 +26,8 @@ namespace Winch.Config
 
         private static string GetConfigPath(string modName)
         {
-            return Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Mods", modName, "Config.json");
+            return Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Config", modName, "Config.json");
         }
-
-
 
         private static ModConfig GetConfig(string modName)
         {
