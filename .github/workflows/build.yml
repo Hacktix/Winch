@@ -66,12 +66,12 @@ jobs:
     steps:
         - name: Zip For Release
           run: |
-            7z a ${{ env.PROJ_NAME }}.zip ${{ env.PROJ_NAME }}/bin/**
-            7z a ${{ env.DISASTER_BUTTON }}.zip ${{ env.MODS_DIR }}/${{ env.DISASTER_BUTTON }}/bin/**
-            7z a ${{ env.EXAMPLE_ITEMS }}.zip ${{ env.MODS_DIR }}/${{ env.EXAMPLE_ITEMS }}/bin/**
-            7z a ${{ env.INTRO_SKIPPER }}.zip ${{ env.MODS_DIR }}/${{ env.INTRO_SKIPPER }}/bin/**
+            7z a ${{ env.PROJ_NAME }}.zip "${{ env.PROJ_NAME }}/bin/**"
+            7z a ${{ env.DISASTER_BUTTON }}.zip "${{ env.MODS_DIR }}/${{ env.DISASTER_BUTTON }}/bin/**"
+            7z a ${{ env.EXAMPLE_ITEMS }}.zip "${{ env.MODS_DIR }}/${{ env.EXAMPLE_ITEMS }}/bin/**"
+            7z a ${{ env.INTRO_SKIPPER }}.zip "${{ env.MODS_DIR }}/${{ env.INTRO_SKIPPER }}/bin/**"
 
-        - name: Create Release
+        - name: Draft Release
           uses: "ncipollo/release-action@v1"
           with:
             allowUpdates: true
