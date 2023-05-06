@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using Winch.Core;
 
@@ -35,24 +34,12 @@ namespace Winch.Config
             return output;
         }
 
-        private static ModConfig GetConfig(string modName, string fileName)
-        {
-            if (!Instances.ContainsKey(modName))
-                Instances.Add(modName, new ModConfig(modName, fileName));
-            return Instances[modName];
-        }
-
         private static ModConfig GetConfig(string modName, string fileName, string subDirectory)
         {
             string _path = Path.Combine(modName, subDirectory);
             if (!Instances.ContainsKey(_path))
                 Instances.Add(_path, new ModConfig(_path, fileName));
             return Instances[_path];
-        }
-
-        public static T? GetProperty<T>(string modName, string key, T? defaultValue, string fileName="Config.json")
-        {
-            return GetConfig(modName, fileName).GetProperty(key, defaultValue);
         }
 
         public static T? GetProperty<T>(string modName, string key, T? defaultValue, string fileName="Config.json", string subDirectory="")
