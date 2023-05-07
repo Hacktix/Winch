@@ -60,7 +60,7 @@ jobs:
             path: "${{ env.MODS_DIR }}/${{ env.INTRO_SKIPPER }}/bin"
   release:
     name: Draft release
-    if: vars.GITHUB_EVENT_NAME == "workflow_dispatch"
+    if: ${{ vars.GITHUB_EVENT_NAME == "workflow_dispatch" }}
     runs-on: windows-latest
     needs: build
     steps:   
