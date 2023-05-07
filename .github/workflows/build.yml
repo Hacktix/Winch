@@ -1,4 +1,4 @@
-name: Build artifacts and draft release
+name: Build artifacts
 
 env:
     PROJ_NAME: Winch
@@ -8,6 +8,13 @@ env:
     INTRO_SKIPPER: IntroSkipper
 
 on:
+  workflow_call:
+    inputs:
+      build_type:
+        description: 'Build type to apss to dotnet, should be either "Debug" or "Release"'
+        required: false
+        default: "Debug"
+        type: string
   push:
     branches: [ "master" ]
   pull_request:
@@ -30,7 +37,7 @@ jobs:
           uses: "actions/setup-dotnet@v3"
 
         - name: Build Winch
-          run: dotnet build -c Debug
+          run: dotnet build -c ${{ inputs.build_type }}
 
         - name: Check
           run: ls
@@ -57,31 +64,4 @@ jobs:
           uses: "actions/upload-artifact@v3"
           with:
             name: "${{ env.INTRO_SKIPPER }}"
-            path: "${{ env.MODS_DIR }}/${{ env.INTRO_SKIPPER }}/bin"
-  release:
-    name: Draft release
-    if: ${{ github.event_name == 'workflow_dispatch' }}
-    runs-on: windows-latest
-    needs: build
-    steps:   
-        - name: Zip For Release
-          run: |
-            7z a ${{ env.PROJ_NAME }}.zip "${{ env.PROJ_NAME }}/bin/**"
-            cd ../${{ env.MODS_DIR }}
-            7z a ${{ env.DISASTER_BUTTON }}.zip "${{ env.DISASTER_BUTTON }}/bin/**"
-            7z a ${{ env.EXAMPLE_ITEMS }}.zip "${{ env.EXAMPLE_ITEMS }}/bin/**"
-            7z a ${{ env.INTRO_SKIPPER }}.zip "${{ env.INTRO_SKIPPER }}/bin/**"
-            cd ..
-
-        - name: Draft Release
-          uses: "ncipollo/release-action@v1"
-          with:
-            allowUpdates: true
-            commit: ${{ github.ref_name }}
-            tag: v${{ inputs.version }}
-            name: Version ${{ inputs.version }}
-            omitBodyDuringUpdate: true
-            artifacts: "${{ env.PROJ_NAME }}.zip ${{ env.DISASTER_BUTTON }}.zip ${{ env.EXAMPLE_ITEMS }}.zip ${{ env.INTRO_SKIPPER }}.zip"
-            draft: true
-    
-      
+            path: "${{ env.MODS_DIR }}/${{ env.INTRO_SKIPPER }}/bin"  
