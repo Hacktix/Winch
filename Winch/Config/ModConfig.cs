@@ -35,14 +35,6 @@ namespace Winch.Config
             return output;
         }
 
-        public static Dictionary<string, object?> GetFullConfig(string modName, string fileName = defaultConfigFile, string subDirectory = "")
-        {
-            string _path = Path.Combine(modName, subDirectory);
-            if (!Instances.ContainsKey(_path))
-                Instances.Add(_path, new ModConfig(_path, fileName));
-            return Instances[_path].Config;
-        }
-
         private static ModConfig GetConfig(string modName, string fileName, string subDirectory)
         {
             string _path = Path.Combine(modName, subDirectory);
@@ -54,6 +46,11 @@ namespace Winch.Config
         public static T? GetProperty<T>(string modName, string key, T? defaultValue, string fileName = defaultConfigFile, string subDirectory = "")
         {
             return GetConfig(modName, fileName, subDirectory).GetProperty(key, defaultValue);
+        }
+
+        public static Dictionary<string, object?> GetFullConfig(string modName, string fileName = defaultConfigFile, string subDirectory = "")
+        {
+            return GetConfig(modName, fileName, subDirectory).Config;
         }
 
         public static void RegisterDefaultConfig(string modName, string config)
