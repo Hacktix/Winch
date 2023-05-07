@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using Winch.Core;
@@ -9,6 +9,7 @@ namespace Winch.Config
     {
         private static Dictionary<string, string> DefaultConfigs = new Dictionary<string, string>();
         private static Dictionary<string, ModConfig> Instances = new Dictionary<string, ModConfig>();
+        private const string defaultConfigFile = "Config.json";
 
         private ModConfig(string modName, string fileName) : base(GetConfigPath(modName, fileName), GetDefaultConfig(modName))
         {
@@ -16,7 +17,7 @@ namespace Winch.Config
 
         private static string GetDefaultConfig(string modName)
         {
-            if(!DefaultConfigs.ContainsKey(modName))
+            if (!DefaultConfigs.ContainsKey(modName))
             {
                 WinchCore.Log.Debug($"No default config found for {modName}");
                 DefaultConfigs.Add(modName, "{}");
@@ -24,7 +25,7 @@ namespace Winch.Config
             return DefaultConfigs[modName];
         }
 
-        private static string GetConfigPath(string configLocation, string fileName="Config.json")
+        private static string GetConfigPath(string configLocation, string fileName)
         {
             string basePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Config");
             string output = Path.Combine(basePath, configLocation, fileName);
@@ -34,7 +35,7 @@ namespace Winch.Config
             return output;
         }
 
-        public static Dictionary<string, object?> GetFullConfig(string modName, string fileName, string subDirectory="")
+        public static Dictionary<string, object?> GetFullConfig(string modName, string fileName = defaultConfigFile, string subDirectory = "")
         {
             string _path = Path.Combine(modName, subDirectory);
             if (!Instances.ContainsKey(_path))
@@ -50,7 +51,7 @@ namespace Winch.Config
             return Instances[_path];
         }
 
-        public static T? GetProperty<T>(string modName, string key, T? defaultValue, string fileName="Config.json", string subDirectory="")
+        public static T? GetProperty<T>(string modName, string key, T? defaultValue, string fileName = defaultConfigFile, string subDirectory = "")
         {
             return GetConfig(modName, fileName, subDirectory).GetProperty(key, defaultValue);
         }
