@@ -60,20 +60,18 @@ jobs:
             path: "${{ env.MODS_DIR }}/${{ env.INTRO_SKIPPER }}/bin"
   release:
     name: Draft release
-    if: ${{ vars.GITHUB_EVENT_NAME}} == "workflow_dispatch"
+    if: vars.GITHUB_EVENT_NAME == "workflow_dispatch"
     runs-on: windows-latest
     needs: build
-    steps:
-        - name: Copy mods folder
-          run: xcopy /s ${{ env.MODS_DIR}} Winch_Examples
-          # 7z can't use a folder with a '.' in it
-    
+    steps:   
         - name: Zip For Release
           run: |
             7z a ${{ env.PROJ_NAME }}.zip "${{ env.PROJ_NAME }}/bin/**"
-            7z a ${{ env.DISASTER_BUTTON }}.zip "Winch_Examples/${{ env.DISASTER_BUTTON }}/bin/**"
-            7z a ${{ env.EXAMPLE_ITEMS }}.zip "Winch_Examples/${{ env.EXAMPLE_ITEMS }}/bin/**"
-            7z a ${{ env.INTRO_SKIPPER }}.zip "Winch_Examples/${{ env.INTRO_SKIPPER }}/bin/**"
+            cd ${{ env.MODS_DIR }}
+            7z a ${{ env.DISASTER_BUTTON }}.zip "${{ env.DISASTER_BUTTON }}/bin/**"
+            7z a ${{ env.EXAMPLE_ITEMS }}.zip "${{ env.EXAMPLE_ITEMS }}/bin/**"
+            7z a ${{ env.INTRO_SKIPPER }}.zip "${{ env.INTRO_SKIPPER }}/bin/**"
+            cd ..
 
         - name: Draft Release
           uses: "ncipollo/release-action@v1"
