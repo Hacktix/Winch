@@ -9,6 +9,7 @@ namespace Winch.Config
     public class JSONConfig
     {
         private readonly Dictionary<string, object?> _config;
+        public Dictionary<string, object?> Config { get { return _config; } }
         private readonly string _configPath;
 
         public JSONConfig(string path, string defaultConfig) {

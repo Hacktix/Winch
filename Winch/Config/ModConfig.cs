@@ -34,6 +34,14 @@ namespace Winch.Config
             return output;
         }
 
+        public static Dictionary<string, object?> GetFullConfig(string modName, string fileName, string subDirectory)
+        {
+            string _path = Path.Combine(modName, subDirectory);
+            if (!Instances.ContainsKey(_path))
+                Instances.Add(_path, new ModConfig(_path, fileName));
+            return Instances[_path].Config;
+        }
+
         private static ModConfig GetConfig(string modName, string fileName, string subDirectory)
         {
             string _path = Path.Combine(modName, subDirectory);
