@@ -67,7 +67,7 @@ jobs:
         - name: Zip For Release
           run: |
             7z a ${{ env.PROJ_NAME }}.zip "${{ env.PROJ_NAME }}/bin/**"
-            cd ${{ env.MODS_DIR }}
+            cd ../${{ env.MODS_DIR }}
             7z a ${{ env.DISASTER_BUTTON }}.zip "${{ env.DISASTER_BUTTON }}/bin/**"
             7z a ${{ env.EXAMPLE_ITEMS }}.zip "${{ env.EXAMPLE_ITEMS }}/bin/**"
             7z a ${{ env.INTRO_SKIPPER }}.zip "${{ env.INTRO_SKIPPER }}/bin/**"
