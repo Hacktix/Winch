@@ -25,7 +25,8 @@ internal static class ItemUtil
         { typeof(DamageItemData), new DamageItemDataConverter() },
     };
 
-    public static Dictionary<string, ItemData> HarvestableItemDataDict = new();
+    public static Dictionary<string, ItemData> harvestableItemDataDict = new();
+    public static Dictionary<string, ItemData> allItemDataDict = new();
 
     public static void PopulateItemData()
     {
@@ -33,9 +34,11 @@ internal static class ItemUtil
         {
             if (item is FishItemData or RelicItemData or HarvestableItemData)
             {
-                HarvestableItemDataDict.Add(item.id, item);
+                harvestableItemDataDict.Add(item.id, item);
+                WinchCore.Log.Debug($"Added item {item.id} to harvestableItemDataDict");
             }
-            WinchCore.Log.Debug($"Added item {item.id} to HarvestableItemDataDict");
+            allItemDataDict.Add(item.id, item);
+            WinchCore.Log.Debug($"Added item {item.id} to allItemDataDict");
         }
     }
 
@@ -47,8 +50,16 @@ internal static class ItemUtil
             WinchCore.Log.Error($"Meta file {metaPath} is empty");
             return;
         }
+        if (allItemDataDict.ContainsKey((string)meta["id"]))
+        {
+            WinchCore.Log.Error($"Duplicate item {(string)meta["id"]} at {metaPath} failed to load");
+            return;
+        }
         var item = UtilHelpers.GetScriptableObjectFromMeta<T>(meta, metaPath);
         if (UtilHelpers.PopulateObjectFromMeta<T>(item, meta, Converters))
+        {
             GameManager.Instance.ItemManager.allItems.Add(item);
+            allItemDataDict.Add(item.id, item);
+        }
     }
 }
