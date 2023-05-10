@@ -1,7 +1,5 @@
 ﻿using System;
-using Winch.Core.API.Events;
 using Winch.Core.API.Events.Addressables;
-using Winch.Core.API.Events.POI;
 using Winch.Core.API.Events.Scene;
 
 namespace Winch.Core.API
