@@ -59,7 +59,6 @@ internal static class ItemUtil
         if (UtilHelpers.PopulateObjectFromMeta<T>(item, meta, Converters))
         {
             GameManager.Instance.ItemManager.allItems.Add(item);
-            allItemDataDict.Add(item.id, item);
         }
     }
 }
