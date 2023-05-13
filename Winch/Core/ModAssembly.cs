@@ -44,6 +44,8 @@ namespace Winch.Core
 
             LoadedAssembly = Assembly.LoadFrom(assemblyPath);
 
+            CheckCompatibility();
+
             WinchCore.Log.Debug($"Loaded Assembly '{LoadedAssembly.GetName().Name}'.");
         }
 
@@ -53,6 +55,19 @@ namespace Winch.Core
                 throw new NullReferenceException("Cannot execute assembly as LoadedAssembly is null");
 
             WinchCore.Log.Debug($"Initializing ModAssembly {LoadedAssembly.GetName().Name}...");
+
+            if (Metadata.ContainsKey("DefaultConfig"))
+                ProcessDefaultConfig();
+
+            if (Metadata.ContainsKey("Dependencies"))
+                ProcessDependencies();
+
+            if (Metadata.ContainsKey("Entrypoint"))
+                ProcessEntrypoint();
+        }
+
+        internal void CheckCompatibility()
+        {
 
             if (!Metadata.ContainsKey("Version"))
                 throw new MissingFieldException("No 'Version' field found in Mod Metadata.");
@@ -72,15 +87,6 @@ namespace Winch.Core
                 if (!VersionUtil.IsSameOrNewer(winchVer, minVer))
                     throw new Exception("Mod requires a version of Winch higher than the one installed.");
             }
-
-            if (Metadata.ContainsKey("DefaultConfig"))
-                ProcessDefaultConfig();
-
-            if (Metadata.ContainsKey("Dependencies"))
-                ProcessDependencies();
-
-            if (Metadata.ContainsKey("Entrypoint"))
-                ProcessEntrypoint();
         }
 
 
