@@ -46,6 +46,11 @@ namespace Winch.Core
 
             CheckCompatibility();
 
+            string modConfig = Path.Combine("Config", Path.GetFileName(BasePath));
+            WinchCore.Log.Debug($"Checking path: {modConfig}");
+            if (!Directory.Exists(modConfig))
+                Directory.CreateDirectory(modConfig);
+
             WinchCore.Log.Debug($"Loaded Assembly '{LoadedAssembly.GetName().Name}'.");
         }
 
