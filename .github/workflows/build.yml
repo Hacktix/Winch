@@ -1,0 +1,58 @@
+name: Build artifacts
+
+env:
+    PROJ_NAME: Winch
+    MODS_DIR: Winch.Examples
+    DISASTER_BUTTON: DisasterButton
+    EXAMPLE_ITEMS: ExampleItems
+    INTRO_SKIPPER: IntroSkipper
+
+on:
+  workflow_call:
+    inputs:
+      build_type:
+        description: 'Build type to pass to dotnet, should be either "Debug" or "Release"'
+        required: false
+        default: "Debug"
+        type: string
+
+jobs:
+  build:
+    name: Create artifacts
+    runs-on: windows-latest
+    steps:
+        - name: Checkout
+          uses: "actions/checkout@v3"
+
+        - name: Setup .NET
+          uses: "actions/setup-dotnet@v3"
+
+        - name: Build Winch
+          run: dotnet build -c ${{ inputs.build_type }}
+
+        - name: Check
+          run: ls
+
+        - name: Upload Winch Artifact
+          uses: "actions/upload-artifact@v3"
+          with:
+            name: "${{ env.PROJ_NAME }}"
+            path: "${{ env.PROJ_NAME }}/bin"
+            
+        - name: Upload DisasterButton Artifact
+          uses: "actions/upload-artifact@v3"
+          with:
+            name: "${{ env.DISASTER_BUTTON }}"
+            path: "${{ env.MODS_DIR }}/${{ env.DISASTER_BUTTON }}/bin"
+
+        - name: Upload ExampleItems Artifact
+          uses: "actions/upload-artifact@v3"
+          with:
+            name: "${{ env.EXAMPLE_ITEMS }}"
+            path: "${{ env.MODS_DIR }}/${{ env.EXAMPLE_ITEMS }}/bin"
+            
+        - name: Upload IntroSkipper Artifact
+          uses: "actions/upload-artifact@v3"
+          with:
+            name: "${{ env.INTRO_SKIPPER }}"
+            path: "${{ env.MODS_DIR }}/${{ env.INTRO_SKIPPER }}/bin"  

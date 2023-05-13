@@ -1,0 +1,11 @@
+name: Debug artifact
+
+on:
+  [push, pull_request]
+
+jobs:
+  build:
+    name: "Build debug"
+    uses: ./.github/workflows/build.yml
+    with: 
+      build_type: "Debug"
