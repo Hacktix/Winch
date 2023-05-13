@@ -11,7 +11,7 @@ on:
   workflow_call:
     inputs:
       build_type:
-        description: 'Build type to apss to dotnet, should be either "Debug" or "Release"'
+        description: 'Build type to pass to dotnet, should be either "Debug" or "Release"'
         required: false
         default: "Debug"
         type: string
