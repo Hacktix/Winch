@@ -1,0 +1,17 @@
+name: Debug artifact
+
+env:
+    PROJ_NAME: Winch
+    MODS_DIR: Winch.Examples
+    DISASTER_BUTTON: DisasterButton
+    EXAMPLE_ITEMS: ExampleItems
+    INTRO_SKIPPER: IntroSkipper
+
+on:
+  [push, pull_request]
+
+jobs:
+  build:
+    uses: ./.github/workflows/build.yml
+    with: 
+      build_type: "Debug"
