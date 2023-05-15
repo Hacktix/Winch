@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.IO;
+using System.Reflection;
 using Winch.Util;
 
 namespace Winch.Core
@@ -72,7 +73,7 @@ namespace Winch.Core
                 {
                     genericMethod.Invoke(null, new object[] { item.Value });
                 }
-                
+
             }
         }
 
@@ -81,7 +82,7 @@ namespace Winch.Core
             string autoMovePoiPath = Path.Combine(conversationPoiFolderPath, "AutoMove");
             string explosivePoiPath = Path.Combine(conversationPoiFolderPath, "Explosive");
             string inspectPoiPath = Path.Combine(conversationPoiFolderPath, "Inspect");
-            
+
             if (Directory.Exists(autoMovePoiPath)) LoadPoiFilesOfType<AutoMovePOI>(autoMovePoiPath);
             if (Directory.Exists(explosivePoiPath)) LoadPoiFilesOfType<ExplosivePOI>(explosivePoiPath);
             if (Directory.Exists(inspectPoiPath)) LoadPoiFilesOfType<InspectPOI>(inspectPoiPath);

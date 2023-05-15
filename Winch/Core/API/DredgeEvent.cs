@@ -1,11 +1,13 @@
 ﻿using System;
 using Winch.Core.API.Events.Addressables;
+using Winch.Core.API.Events.Scene;
 
 namespace Winch.Core.API
 {
     public static class DredgeEvent
     {
-        public static AddressableEvents AddressableEvents = new AddressableEvents();
+        public static AddressableEvents AddressableEvents = new();
+        public static SceneEvents SceneEvents = new();
 
         public static event EventHandler? ManagersLoaded;
         public static void TriggerManagersLoaded()
