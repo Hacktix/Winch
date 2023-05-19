@@ -42,9 +42,9 @@ namespace Winch.Core
             if(!File.Exists(assemblyPath))
                 throw new FileNotFoundException($"Could not find mod assembly '{assemblyPath}'");
 
-            LoadedAssembly = Assembly.LoadFrom(assemblyPath);
-
             CheckCompatibility();
+
+            LoadedAssembly = Assembly.LoadFrom(assemblyPath);
 
             WinchCore.Log.Debug($"Loaded Assembly '{LoadedAssembly.GetName().Name}'.");
         }
