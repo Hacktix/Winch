@@ -1,6 +1,7 @@
 {
-  "Version": "1.0",
-  "ModAssembly": "IntroSkipper.dll",
-  "MinWinchVersion": "alpha-1.4",
-  "ApplyPatches": true
+    "ModGUID": "hacktix.introskipper",
+    "Version": "1.0",
+    "ModAssembly": "IntroSkipper.dll",
+    "MinWinchVersion": "alpha-1.4",
+    "ApplyPatches": true
 }
