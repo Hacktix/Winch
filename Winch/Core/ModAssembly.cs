@@ -74,6 +74,9 @@ namespace Winch.Core
             else if (!VersionUtil.ValidateVersion(Metadata["Version"].ToString()))
                 throw new FormatException("Mod Version has invalid format.");
 
+            if (!Metadata.ContainsKey("ModGUID"))
+                throw new MissingFieldException("No 'ModGUID' field found in Mod Metadata.");
+
             if (!Metadata.ContainsKey("MinWinchVersion"))
                 WinchCore.Log.Warn($"No MinWinchVersion defined. Mod will load anyway, but version conflicts may occur!");
             else
