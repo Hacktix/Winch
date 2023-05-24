@@ -40,6 +40,9 @@
 		<None Update="Assets\Localization\en.json">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
+		<None Update="Assets\POI\Harvest\exampleitems.exampleharvestpoi.json">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
 		<None Update="Assets\Textures\exampleitems.diamond.png">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
