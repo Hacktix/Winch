@@ -38,9 +38,20 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Update="mod_meta.json">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  <None Include="mod_meta.json">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
+		<None Include="doorstop_config.ini">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
 	</ItemGroup>
+
+	<ItemGroup>
+		<DLLs Include="$(ProjectDir)lib\*.*"></DLLs>
+	</ItemGroup>
+
+	<Target Name="CopyDLLs" AfterTargets="Build">
+		<Copy SourceFiles="@(DLLs)" DestinationFolder="$(OutputPath)"/>
+	</Target>
 
 </Project>
