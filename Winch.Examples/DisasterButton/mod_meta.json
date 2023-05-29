@@ -1,9 +1,12 @@
 {
-  "Version": "1.0",
-  "ModAssembly": "DisasterButton.dll",
-  "Entrypoint": "DisasterButton.Loader/Initialize",
-  "DefaultConfig": {
-    "DisasterButtonKey": "delete"
-  },
-  "MinWinchVersion": "alpha-1.0"
+	"Name": "Disaster Button",
+	"Author": "Hacktix",
+	"ModGUID": "hacktix.disasterbutton",
+	"Version": "1.0",
+	"ModAssembly": "DisasterButton.dll",
+	"Entrypoint": "DisasterButton.Loader/Initialize",
+	"DefaultConfig": {
+		"DisasterButtonKey": "delete"
+	},
+	"MinWinchVersion": "alpha-1.0"
 }
