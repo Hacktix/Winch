@@ -33,7 +33,7 @@ jobs:
           run: |
             for mod in DisasterButton ExampleItems IntroSkipper
             do
-              mkdir Examples/$mod
+              mkdir -p Examples/$mod
               mv Winch.Examples/$mod/bin/* Examples/$mod/
             done
             
