@@ -23,9 +23,6 @@ jobs:
         - name: Build Winch
           run: dotnet build -c ${{ inputs.build_type }}
 
-        - name: Check
-          run: ls
-
         - name: Upload Winch Artifact
           uses: actions/upload-artifact@v3
           with:
@@ -36,6 +33,7 @@ jobs:
           run: |
             for mod in DisasterButton ExampleItems IntroSkipper
             do
+              mkdir Examples/$mod
               mv Winch.Examples/$mod/bin/* Examples/$mod/
             done
             
