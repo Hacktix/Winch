@@ -57,16 +57,13 @@ jobs:
       
       - name: Zip Example Mods
         run: |
-          for mod in DisasterButton ExampleItems IntroSkipper; do
-          cd $mod/
-          zip -r $mod.zip *
-          mv $mod.zip ...
-          cd ...
-
-      - name: Release
-        uses: softprops/action-gh-release@v1
-        with:
-          files: Release.txt
+          for mod in DisasterButton ExampleItems IntroSkipper
+          do
+            cd $mod/
+            zip -r $mod.zip *
+            mv $mod.zip ..
+            cd ..
+          done
           
       - name: Upload Asset
         uses: ncipollo/release-action@v1
