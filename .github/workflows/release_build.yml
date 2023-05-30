@@ -62,7 +62,7 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           allowUpdates: true
-          commit: main
+          commit: master
           tag: v${{ github.event.pull_request.title }}
           name: Version ${{ github.event.pull_request.title }}
           omitBodyDuringUpdate: true
