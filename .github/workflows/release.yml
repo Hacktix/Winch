@@ -1,0 +1,81 @@
+name: Release Build
+
+env:
+  PROJ_NAME: Winch
+  MODS_DIR: Winch.Examples
+  DISASTER_BUTTON: DisasterButton
+  EXAMPLE_ITEMS: ExampleItems
+  INTRO_SKIPPER: IntroSkipper
+
+on:
+  push:
+    branches: [master]
+    paths-ignore:
+      - "*.md"
+      - "LICENSE"
+      - ".gitignore"
+  pull_request:
+    branches: [master]
+    types:
+      - synchronize
+      - labeled
+    paths-ignore:
+      - "*.md"
+      - "LICENSE"
+      - ".gitignore"
+
+jobs:
+  Build:
+    if: ${{ github.ref == 'refs/heads/master' || contains(github.event.pull_request.labels.*.name, 'update-pr')  }}
+    uses: ./.github/workflows/build.yaml
+    with:
+      build_type: Release
+  Update_Release:
+    name: 'Create/Update Release Asset'
+    needs: Build
+    if: ${{ github.ref != 'refs/heads/master' && contains(github.event.pull_request.labels.*.name, 'update-pr') }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Winch Asset
+        uses: actions/download-artifact@v3
+        with:
+          name: Winch
+          path: Winch
+
+      - name: Zip Winch Asset
+        run: |
+          cd Winch/
+          zip -r Winch.zip *
+          mv Winch.zip ..
+          cd ..
+      
+      - name: Download Example Mods
+        uses: actions/download-artifact@v3
+        with:
+          name: Winch Examples
+          path: Examples
+      
+      - name: Zip Example Mods
+        run: |
+          for mod in DisasterButton ExampleItems IntroSkipper; do
+          cd $mod/
+          zip -r $mod.zip *
+          mv $mod.zip ...
+          cd ...
+
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: Release.txt
+          
+      - name: Upload Asset
+        uses: ncipollo/release-action@v1
+        with:
+          allowUpdates: true
+          commit: main
+          tag: v${{ github.event.pull_request.title }}
+          name: Version ${{ github.event.pull_request.title }}
+          omitBodyDuringUpdate: true
+          artifacts: Winch.zip, DisasterButton.zip, ExampleItems.zip, IntroSkipper.zip
+          draft: true
+          prerelease: false
