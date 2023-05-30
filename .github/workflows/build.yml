@@ -32,6 +32,15 @@ jobs:
             name: Winch
             path: Winch/bin
             
+        - name: Move Example Mods
+          run: |
+            cd Winch.Examples
+            for mod in DisasterButton ExampleItems IntroSkipper
+            do
+              mv $mod/bin/* $mod/
+            done
+            cd ..
+            
         - name: Upload Example Mod Artifact
           uses: actions/upload-artifact@v3
           with:
