@@ -36,7 +36,7 @@ jobs:
           run: |
             for mod in DisasterButton ExampleItems IntroSkipper
             do
-              mv Winch.Examples/$mod/bin/* Winch.Examples/$mod/
+              mv Winch.Examples/$mod/bin/* Examples/$mod/
             done
             
         - name: Upload Example Mod Artifact
@@ -44,6 +44,6 @@ jobs:
           with:
             name: Winch Examples
             path: |
-                Winch.Examples/DisasterButton
-                Winch.Examples/ExampleItems
-                Winch.Examples/IntroSkipper
+                Examples/DisasterButton
+                Examples/ExampleItems
+                Examples/IntroSkipper
