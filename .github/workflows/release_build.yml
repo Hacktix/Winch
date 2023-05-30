@@ -1,12 +1,5 @@
 name: Release Build
 
-env:
-  PROJ_NAME: Winch
-  MODS_DIR: Winch.Examples
-  DISASTER_BUTTON: DisasterButton
-  EXAMPLE_ITEMS: ExampleItems
-  INTRO_SKIPPER: IntroSkipper
-
 on:
   push:
     branches: [master]
