@@ -37,6 +37,6 @@ jobs:
           with:
             name: Winch Examples
             path: |
-                Winch.Examples/DisasterButton/bin/bin
-                Winch.Examples/ExampleItems/bin/bin
-                Winch.Examples/IntroSkipper/bin/bin
+                Winch.Examples/DisasterButton
+                Winch.Examples/ExampleItems
+                Winch.Examples/IntroSkipper
