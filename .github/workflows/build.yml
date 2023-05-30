@@ -12,7 +12,7 @@ on:
 jobs:
   build:
     name: Create artifacts
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
         - name: Checkout
           uses: actions/checkout@v3
@@ -23,20 +23,25 @@ jobs:
         - name: Build Winch
           run: dotnet build -c ${{ inputs.build_type }}
 
-        - name: Check
-          run: ls
-
         - name: Upload Winch Artifact
           uses: actions/upload-artifact@v3
           with:
             name: Winch
             path: Winch/bin
             
+        - name: Move Example Mods
+          run: |
+            for mod in DisasterButton ExampleItems IntroSkipper
+            do
+              mkdir -p Examples/$mod
+              mv Winch.Examples/$mod/bin/* Examples/$mod/
+            done
+            
         - name: Upload Example Mod Artifact
           uses: actions/upload-artifact@v3
           with:
             name: Winch Examples
             path: |
-                Winch.Examples/DisasterButton/bin
-                Winch.Examples/ExampleItems/bin
-                Winch.Examples/IntroSkipper/bin
+                Examples/DisasterButton
+                Examples/ExampleItems
+                Examples/IntroSkipper

@@ -1,12 +1,5 @@
 name: Release Build
 
-env:
-  PROJ_NAME: Winch
-  MODS_DIR: Winch.Examples
-  DISASTER_BUTTON: DisasterButton
-  EXAMPLE_ITEMS: ExampleItems
-  INTRO_SKIPPER: IntroSkipper
-
 on:
   push:
     branches: [master]
@@ -27,7 +20,7 @@ on:
 jobs:
   Build:
     if: ${{ github.ref == 'refs/heads/master' || contains(github.event.pull_request.labels.*.name, 'update-pr')  }}
-    uses: ./.github/workflows/build.yaml
+    uses: ./.github/workflows/build.yml
     with:
       build_type: Release
   Update_Release:
@@ -59,17 +52,17 @@ jobs:
         run: |
           for mod in DisasterButton ExampleItems IntroSkipper
           do
-            cd $mod/
+            cd Examples/$mod/
             zip -r $mod.zip *
-            mv $mod.zip ..
-            cd ..
+            mv $mod.zip ../..
+            cd ../..
           done
           
       - name: Upload Asset
         uses: ncipollo/release-action@v1
         with:
           allowUpdates: true
-          commit: main
+          commit: master
           tag: v${{ github.event.pull_request.title }}
           name: Version ${{ github.event.pull_request.title }}
           omitBodyDuringUpdate: true
