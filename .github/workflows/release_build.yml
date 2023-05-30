@@ -27,7 +27,7 @@ on:
 jobs:
   Build:
     if: ${{ github.ref == 'refs/heads/master' || contains(github.event.pull_request.labels.*.name, 'update-pr')  }}
-    uses: ./.github/workflows/build.yaml
+    uses: ./.github/workflows/build.yml
     with:
       build_type: Release
   Update_Release:
