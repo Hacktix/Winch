@@ -42,9 +42,9 @@ namespace Winch.Core
             if(!File.Exists(assemblyPath))
                 throw new FileNotFoundException($"Could not find mod assembly '{assemblyPath}'");
 
-            LoadedAssembly = Assembly.LoadFrom(assemblyPath);
-
             CheckCompatibility();
+
+            LoadedAssembly = Assembly.LoadFrom(assemblyPath);
 
             WinchCore.Log.Debug($"Loaded Assembly '{LoadedAssembly.GetName().Name}'.");
         }
@@ -73,6 +73,9 @@ namespace Winch.Core
                 throw new MissingFieldException("No 'Version' field found in Mod Metadata.");
             else if (!VersionUtil.ValidateVersion(Metadata["Version"].ToString()))
                 throw new FormatException("Mod Version has invalid format.");
+
+            if (!Metadata.ContainsKey("ModGUID"))
+                throw new MissingFieldException("No 'ModGUID' field found in Mod Metadata.");
 
             if (!Metadata.ContainsKey("MinWinchVersion"))
                 WinchCore.Log.Warn($"No MinWinchVersion defined. Mod will load anyway, but version conflicts may occur!");
