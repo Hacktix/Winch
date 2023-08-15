@@ -18,7 +18,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="DredgeGameLibs" Version="1.1.0" />
-		<PackageReference Include="Lib.Harmony" Version="2.2.2" />
+		<PackageReference Include="HarmonyX" Version="2.10.1" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
 	</ItemGroup>
 
